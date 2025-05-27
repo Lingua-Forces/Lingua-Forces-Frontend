@@ -9,16 +9,22 @@
 
   <main class="auth__main">
     <section class="auth__card card">
-      <h1 class="auth__title">Bienvenido de nuevo</h1>
+      <h1 class="auth__title">Crea tu cuenta</h1>
       <p class="auth__subtitle">
-        Inicia sesión y accede a ejercicios hechos a tu medida
+        Regístrate y accede a ejercicios hechos a tu medida
       </p>
 
       <form>
+        <label for="name" class="auth__label">Nombres y apellidos</label>
+        <input id="name" type="name" class="auth__input" placeholder="Joen Doe" />
+
         <label for="email" class="auth__label">Correo electrónico</label>
         <input id="email" type="email" class="auth__input" placeholder="m@example.com" />
 
         <label for="password" class="auth__label">Contraseña</label>
+        <input id="password" type="password" class="auth__input" placeholder="**********" />
+
+        <label for="password" class="auth__label">Confirmar contraseña</label>
         <input id="password" type="password" class="auth__input" placeholder="**********" />
 
         <button type="submit" class="btn btn--primary auth__button" >

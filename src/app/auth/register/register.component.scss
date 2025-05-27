@@ -1,0 +1,132 @@
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #F0FBF6;
+  &__header {
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    align-items: center;
+  }
+
+  &__brand {
+    font-size: $semibold-header-1-font-size;
+    font-family: 'Arial', sans-serif;
+    font-weight: 600;
+    color: $color-primary;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  &__main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  &__card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  &__title {
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: $color-primary-strong;
+  }
+  
+  &__subtitle {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: $color-primary-strong;
+  }
+
+
+  &__label {
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  &__input {
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 2rem;
+    margin-top: 0.2rem;
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+
+    &:focus {
+      border-color: #1d4ed8;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: $color-primary-hover;
+    }
+  }
+
+  &__foot {
+    text-align: center;
+  }
+
+
+  
+  &__footer {
+    width: 100%;
+    background-color: white;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .footer__nav {
+      display: flex;
+      gap: 1rem;
+
+      a {
+        font-size: $text-2-font-size;
+        color: #000;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
