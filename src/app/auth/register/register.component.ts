@@ -1,12 +1,72 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router'; // ✅ IMPORTANTE
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatInputModule } from '@angular/material/input';  // Para los inputs
+import { MatFormFieldModule } from '@angular/material/form-field';  // Para los campos de formulario
 
 @Component({
   selector: 'app-register',
-  imports: [RouterModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss'],
+  imports: [RouterModule,ReactiveFormsModule, CommonModule,MatFormFieldModule ]
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
+  form: FormGroup;
 
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      lastname: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
+    }, { validator: this.passwordMatchValidator });
+  }
+
+  ngOnInit(): void {}
+
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('password')?.value === form.get('confirmPassword')?.value
+      ? null : { mismatch: true };
+  }
+
+  register(): void {
+    if (this.form.invalid) {
+      return;
+    }
+    const { firstname, lastname, email, password, confirmPassword } = this.form.value;
+
+    const registerRequest = { firstname, lastname, email, password, confirmPassword };
+
+    this.authService.register(registerRequest).subscribe({
+      next: (response) => {
+        this.showSnackBar('Cuenta creada exitosamente');
+        this.router.navigate(['/login']); // Redirigir al login
+      },
+      error: (err) => {
+        this.showSnackBar('Hubo un problema al crear la cuenta');
+        console.error(err);
+      },
+    });
+  }
+
+  controlHasError(control: string, error: string) {
+    return this.form.controls[control].hasError(error);
+  }
+
+  private showSnackBar(message: string): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+    });
+  }
 }

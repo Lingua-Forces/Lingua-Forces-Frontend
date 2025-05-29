@@ -14,26 +14,50 @@
         Regístrate y accede a ejercicios hechos a tu medida
       </p>
 
-      <form>
-        <label for="name" class="auth__label">Nombres y apellidos</label>
-        <input id="name" type="name" class="auth__input" placeholder="Joen Doe" />
+      <form [formGroup]="form" (ngSubmit)="register()" novalidate>
+        <label for="name" class="auth__label">Nombre</label>
+        <input id="name" formControlName="name" type="text" class="auth__input" placeholder="Joen" />
+        <div *ngIf="controlHasError('name', 'required')" class="error">
+          El nombre es obligatorio.
+        </div>
+
+        <label for="lastname" class="auth__label">Apellido</label>
+        <input id="lastname" formControlName="lastname" type="text" class="auth__input" placeholder="Doe" />
+        <div *ngIf="controlHasError('lastname', 'required')" class="error">
+          El apellido es obligatorio.
+        </div>
 
         <label for="email" class="auth__label">Correo electrónico</label>
-        <input id="email" type="email" class="auth__input" placeholder="m@example.com" />
+        <input id="email" formControlName="email" type="email" class="auth__input" placeholder="m@example.com" />
+        <div *ngIf="controlHasError('email', 'required')" class="error">
+          El correo electrónico es obligatorio.
+        </div>
+        <div *ngIf="controlHasError('email', 'email')" class="error">
+          El correo electrónico no es válido.
+        </div>
 
         <label for="password" class="auth__label">Contraseña</label>
-        <input id="password" type="password" class="auth__input" placeholder="**********" />
+        <input id="password" formControlName="password" type="password" class="auth__input" placeholder="**********" />
+        <div *ngIf="controlHasError('password', 'required')" class="error">
+          La contraseña es obligatoria.
+        </div>
 
-        <label for="password" class="auth__label">Confirmar contraseña</label>
-        <input id="password" type="password" class="auth__input" placeholder="**********" />
+        <label for="confirmPassword" class="auth__label">Confirmar contraseña</label>
+        <input id="confirmPassword" formControlName="confirmPassword" type="password" class="auth__input" placeholder="**********" />
+        <div *ngIf="controlHasError('confirmPassword', 'required')" class="error">
+          Confirmar la contraseña es obligatorio.
+        </div>
+        <div *ngIf="form.controls['confirmPassword'].value !== form.controls['password'].value" class="error">
+          Las contraseñas no coinciden.
+        </div>
 
-        <button type="submit" class="btn btn--primary auth__button" >
-          Iniciar sesión
+        <button type="submit" class="btn btn--primary auth__button" [disabled]="form.invalid">
+          Crear cuenta
         </button>
       </form>
 
       <p class="auth__foot">
-        ¿No tienes cuenta? <a href="#">Regístrate</a>
+        ¿Ya tienes cuenta? <a [routerLink]="'/login'">Inicia sesión</a>
       </p>
     </section>
   </main>

@@ -1,0 +1,34 @@
+<app-main-header />
+
+<section class="evaluation-content" *ngIf="currentQuestion; else loading">
+  <div class="evaluation__container">
+    <h1 class="evaluation__title">Evaluación de Inglés</h1>
+    <p class="evaluation__subtitle">Responde las siguientes preguntas para conocer tu nivel.</p>
+
+    <div class="evaluation__progress">
+      <label for="progress">Pregunta {{ currentIndex + 1 }} de {{ questions.length }}</label>
+      <progress id="progress" [value]="currentIndex + 1" [max]="questions.length"></progress>
+    </div>
+
+    <div class="card evaluation__card">
+      <h2 class="evaluation__instructions">Instrucciones</h2>
+      <p>Escribe una breve respuesta en inglés a la siguiente pregunta:</p>
+      <p class="evaluation__question"><strong>{{ currentQuestion.question }}</strong></p>
+
+      <textarea
+        class="evaluation__textarea"
+        placeholder="Escribe tu respuesta aquí..."
+        rows="5"
+        [(ngModel)]="currentAnswer"
+      ></textarea>
+
+      <button class="btn btn--primary evaluation__button" (click)="nextQuestion()" [disabled]="!currentAnswer.trim()">
+        {{ currentIndex + 1 === questions.length ? 'Enviar respuestas' : 'Siguiente pregunta' }}
+      </button>
+    </div>
+  </div>
+</section>
+
+<ng-template #loading>
+  <p class="loading">Cargando preguntas...</p>
+</ng-template>

@@ -23,13 +23,13 @@
 }
 
 .btn--ghost {
-  background-color: transparent;
+  background-color: white;
   border: 2px solid variables.$color-primary;
   color: variables.$color-primary;
 
   &:hover {
-    background-color: variables.$color-primary;
-    color: white;
+    background-color: variables.$color-primary-strong;
+    color: variables.$color-secondary-hover;
   }
 }
 

@@ -14,14 +14,24 @@
         Inicia sesión y accede a ejercicios hechos a tu medida
       </p>
 
-      <form>
+      <form (ngSubmit)="login()" [formGroup]="form">
         <label for="email" class="auth__label">Correo electrónico</label>
-        <input id="email" type="email" class="auth__input" placeholder="m@example.com" />
+        <input id="email" type="email" class="auth__input" placeholder="m@example.com" 
+        name="email" required formControlName="email"/>
+        <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="error">
+          <small *ngIf="controlHasError('email', 'required')">Correo requerido.</small>
+          <small *ngIf="controlHasError('email', 'email')">Correo inválido.</small>
+        </div>
 
         <label for="password" class="auth__label">Contraseña</label>
-        <input id="password" type="password" class="auth__input" placeholder="**********" />
-
-        <button type="submit" class="btn btn--primary auth__button" >
+        <input id="password" type="password" class="auth__input" placeholder="**********" 
+        name="password" required minlength="6" formControlName="password"/>
+        <div
+          *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+          class="error">
+          <small *ngIf="controlHasError('password', 'required')">Contraseña requerida.</small>
+        </div>
+        <button type="submit" class="btn btn--primary auth__button" [disabled]="form.invalid">
           Iniciar sesión
         </button>
       </form>
