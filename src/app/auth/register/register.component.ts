@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatInputModule } from '@angular/material/input';  // Para los inputs
 import { MatFormFieldModule } from '@angular/material/form-field';  // Para los campos de formulario
+import { SignUpService } from '../services/sign-up.service';
 
 @Component({
   selector: 'app-register',
@@ -20,13 +21,13 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private signUpService: SignUpService,
     private router: Router,
     private snackBar: MatSnackBar
   ) {
     this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      lastname: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
@@ -44,11 +45,11 @@ export class RegisterComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    const { firstname, lastname, email, password, confirmPassword } = this.form.value;
+    const { firstName, lastName, email, password, confirmPassword } = this.form.value;
 
-    const registerRequest = { firstname, lastname, email, password, confirmPassword };
+    const registerRequest = { firstName, lastName, email, password, confirmPassword };
 
-    this.authService.register(registerRequest).subscribe({
+    this.signUpService.signup(registerRequest).subscribe({
       next: (response) => {
         this.showSnackBar('Cuenta creada exitosamente');
         this.router.navigate(['/login']); // Redirigir al login

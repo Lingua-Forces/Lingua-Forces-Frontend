@@ -56,6 +56,9 @@ export class LoginComponent implements OnInit {
         else if (err.status === 403) {
           this.showSnackBar('El usuario no está autorizado');
         }
+        else if (err.status === 500) {
+          this.showSnackBar('El usuario no está verificado');
+        }
         else {
           this.showSnackBar('Error en el inicio de sesión '+ err.status);
         }

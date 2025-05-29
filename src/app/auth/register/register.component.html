@@ -15,15 +15,15 @@
       </p>
 
       <form [formGroup]="form" (ngSubmit)="register()" novalidate>
-        <label for="name" class="auth__label">Nombre</label>
-        <input id="name" formControlName="name" type="text" class="auth__input" placeholder="Joen" />
-        <div *ngIf="controlHasError('name', 'required')" class="error">
+        <label for="firstName" class="auth__label">Nombre</label>
+        <input id="firstName" formControlName="firstName" type="text" class="auth__input" placeholder="Joen" />
+        <div *ngIf="controlHasError('firstName', 'required')" class="error">
           El nombre es obligatorio.
         </div>
 
-        <label for="lastname" class="auth__label">Apellido</label>
-        <input id="lastname" formControlName="lastname" type="text" class="auth__input" placeholder="Doe" />
-        <div *ngIf="controlHasError('lastname', 'required')" class="error">
+        <label for="lastName" class="auth__label">Apellido</label>
+        <input id="lastName" formControlName="lastName" type="text" class="auth__input" placeholder="Doe" />
+        <div *ngIf="controlHasError('lastName', 'required')" class="error">
           El apellido es obligatorio.
         </div>
 

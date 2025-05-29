@@ -4,6 +4,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { EvalComponent } from './eval/eval.component';
 import { authGuard } from './auth/auth.guard';
+import { VerifyComponent } from './auth/verify/verify.component';
 
 
 export const routes: Routes = [
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'verify', component: VerifyComponent },
   { path: 'eval', component: EvalComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];

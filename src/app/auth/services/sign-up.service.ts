@@ -20,13 +20,13 @@ export class SignUpService {
 
   
   signup(signupRequest: RegisterRequest) {
-    const url = `${this.baseUrl}/register`;
+    const url = `${this.baseUrl}/auth/register`;
     return this.http.post<UserProfile>(url, signupRequest);    
   }
 
   verify(token: string): Observable<UserProfile> {
     let params = new HttpParams().set('token', token);
-    return this.http.put<UserProfile>(this.baseUrl+'/verify', null, { params });
+    return this.http.put<UserProfile>(this.baseUrl+'/auth/verify', null, { params });
   }
 
   // resendVerification(verificationRequest:VerificationRequest) {

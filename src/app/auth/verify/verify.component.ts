@@ -6,7 +6,7 @@ import { SignUpService } from '../services/sign-up.service';
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
-  styleUrl: './verify.component.css'
+  styleUrl: './verify.component.scss'
 })
 export class VerifyComponent implements OnInit {
   constructor(
