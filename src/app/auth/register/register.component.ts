@@ -13,25 +13,25 @@ import { SignUpService } from '../services/sign-up.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
-  imports: [RouterModule,ReactiveFormsModule, CommonModule,MatFormFieldModule ]
+  styleUrls: ['./../auth.module.scss'],
+  imports: [RouterModule, ReactiveFormsModule, CommonModule, MatFormFieldModule]
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private signUpService: SignUpService,
-    private router: Router,
-    private snackBar: MatSnackBar
-  ) {
+  constructor(private formBuilder: FormBuilder,private signUpService: SignUpService,private router: Router,private snackBar: MatSnackBar ) {
     this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-    }, { validator: this.passwordMatchValidator });
+    }, {
+      validators: this.passwordMatchValidator
+    });
+    
   }
 
   ngOnInit(): void {}

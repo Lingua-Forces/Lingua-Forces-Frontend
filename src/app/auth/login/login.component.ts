@@ -11,11 +11,11 @@ import { NgIf } from '@angular/common';
   selector: 'app-login',
   imports: [RouterModule, FormsModule,ReactiveFormsModule, NgIf ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrls: ['./../auth.module.scss'],
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-  passwordVisible = false;
+  showPassword = false;
 
   constructor(
     private authService: AuthService,
@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Verificar si el usuario está autenticado
     if (this.authService.auth()) {
       this.router.navigate(['/eval']);
     }

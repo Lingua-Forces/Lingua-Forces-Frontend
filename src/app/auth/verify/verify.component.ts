@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SignUpService } from '../services/sign-up.service';
-
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
-  styleUrl: './verify.component.scss'
+  styleUrl: './../auth.module.scss',
+  imports: [RouterModule],
 })
 export class VerifyComponent implements OnInit {
   constructor(
@@ -45,5 +45,13 @@ export class VerifyComponent implements OnInit {
       duration: 3000,
     });
   }
-
+  resendVerification(): void {
+    // Aquí puedes integrar tu lógica para reenviar el código, por ejemplo:
+    // this.authService.resendVerificationEmail().subscribe(...);
+    alert('Código de verificación reenviado (simulado).');
+    // También podrías redirigir al login o mostrar un mensaje.
+    // post  a service to resend the verification email
+    
+  }
+  
 }

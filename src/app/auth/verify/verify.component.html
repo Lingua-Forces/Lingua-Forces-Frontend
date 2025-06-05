@@ -1,1 +1,33 @@
-<p>verify works!</p>
+<div class="auth">
+  <header class="auth__header">
+    <div class="auth__brand" [routerLink]="'/home'">LinguaForces</div>
+    <div class="auth__actions">
+      <button class="btn btn--ghost" [routerLink]="'/login'">Login</button>
+      <button class="btn btn--primary" [routerLink]="'/register'">Register</button>
+    </div>
+  </header>
+
+  <main class="auth__main">
+<section class="auth__card card">
+    <h2 class="auth__title">Código expirado</h2>
+    <p class="auth__text">
+      Tu código de verificación ha expirado. Por favor, solicita uno nuevo para continuar con el proceso de registro.
+    </p>
+
+    <p class="auth__text">
+      ¿No recibiste el código?
+      <a class="auth__link" (click)="resendVerification()">Enviar otro código</a>
+    </p>
+</section>
+
+  </main>
+
+  <footer class="auth__footer">
+    <p>2024 LinguaForces. All rights reserved</p>
+    <nav class="footer__nav">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Contact</a>
+    </nav>
+  </footer>
+</div>

@@ -1,6 +1,6 @@
 <div class="landing">
   <header class="landing__header">
-    <div class="landing__brand">LinguaForces</div>
+    <div class="landing__brand" [routerLink]="'/home'">LinguaForces</div>
     <div class="landing__actions">
     <button class="btn btn--ghost" [routerLink]="'/login'">Login</button>
       <button class="btn btn--primary" [routerLink]="'/register'">Register</button>
@@ -15,7 +15,7 @@
         <p class="landing__subtitle">
           Entrenamiento y evaluación personalizada para ayudarte a dominar el inglés a tu propio ritmo
         </p>
-        <button class="btn btn--primary">Empezar</button>
+        <button class="btn btn--primary" [routerLink]="'/login'">Empezar</button>
       </section>
 
       <section class="landing__features card">

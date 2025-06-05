@@ -1,6 +1,6 @@
 <div class="auth">
   <header class="auth__header">
-    <div class="auth__brand">LinguaForces</div>
+    <div class="auth__brand" [routerLink]="'/home'">LinguaForces</div>
     <div class="auth__actions">
       <button class="btn btn--ghost" [routerLink]="'/login'">Login</button>
       <button class="btn btn--primary" [routerLink]="'/register'">Register</button>
@@ -10,46 +10,84 @@
   <main class="auth__main">
     <section class="auth__card card">
       <h1 class="auth__title">Crea tu cuenta</h1>
-      <p class="auth__subtitle">
-        Regístrate y accede a ejercicios hechos a tu medida
-      </p>
+      <p class="auth__subtitle">Regístrate y accede a ejercicios hechos a tu medida</p>
 
       <form [formGroup]="form" (ngSubmit)="register()" novalidate>
-        <label for="firstName" class="auth__label">Nombre</label>
-        <input id="firstName" formControlName="firstName" type="text" class="auth__input" placeholder="Joen" />
-        <div *ngIf="controlHasError('firstName', 'required')" class="error">
-          El nombre es obligatorio.
+
+        <div class="form-field">
+          <label for="firstName" class="auth__label">Nombre</label>
+          <input id="firstName" formControlName="firstName" type="text" class="auth__input" placeholder="Joen" />
+          <div *ngIf="controlHasError('firstName', 'required') && form.get('firstName')?.touched" class="error">
+            El nombre es obligatorio.
+          </div>
         </div>
 
-        <label for="lastName" class="auth__label">Apellido</label>
-        <input id="lastName" formControlName="lastName" type="text" class="auth__input" placeholder="Doe" />
-        <div *ngIf="controlHasError('lastName', 'required')" class="error">
-          El apellido es obligatorio.
+        <div class="form-field">
+          <label for="lastName" class="auth__label">Apellido</label>
+          <input id="lastName" formControlName="lastName" type="text" class="auth__input" placeholder="Doe" />
+          <div *ngIf="controlHasError('lastName', 'required') && form.get('lastName')?.touched" class="error">
+            El apellido es obligatorio.
+          </div>
         </div>
 
-        <label for="email" class="auth__label">Correo electrónico</label>
-        <input id="email" formControlName="email" type="email" class="auth__input" placeholder="m@example.com" />
-        <div *ngIf="controlHasError('email', 'required')" class="error">
-          El correo electrónico es obligatorio.
+        <div class="form-field">
+          <label for="email" class="auth__label">Correo electrónico</label>
+          <input id="email" formControlName="email" type="email" class="auth__input" placeholder="m@example.com" />
+          <div *ngIf="controlHasError('email', 'required') && form.get('email')?.touched" class="error">
+            El correo electrónico es obligatorio.
+          </div>
+          <div *ngIf="controlHasError('email', 'email')" class="error">
+            El correo electrónico no es válido.
+          </div>
         </div>
-        <div *ngIf="controlHasError('email', 'email')" class="error">
-          El correo electrónico no es válido.
+        <div class="form-field">
+          <label for="password" class="auth__label">Contraseña</label>
+          <div class="password-wrapper">
+            <input id="password" formControlName="password" [type]="showPassword ? 'text' : 'password'" class="auth__input" placeholder="**********" />
+            <button type="button" (click)="showPassword = !showPassword" class="toggle-password-btn">
+              <svg *ngIf="!showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <svg *ngIf="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.05 10.05 0 012.641-4.362M6.28 6.28A10.05 10.05 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.048 10.048 0 01-4.51 5.645M15 12a3 3 0 01-3 3m0 0a3 3 0 01-3-3m3 3L6.28 6.28" />
+              </svg>
+            </button>
+          </div>
+
+          <div *ngIf="controlHasError('password', 'required') && form.get('password')?.touched" class="error">
+            La contraseña es obligatoria.
+          </div>
+          <div *ngIf="controlHasError('password', 'minlength')" class="error">
+            La contraseña debe tener al menos 6 caracteres.
+          </div>
         </div>
 
-        <label for="password" class="auth__label">Contraseña</label>
-        <input id="password" formControlName="password" type="password" class="auth__input" placeholder="**********" />
-        <div *ngIf="controlHasError('password', 'required')" class="error">
-          La contraseña es obligatoria.
+
+        <div class="form-field">
+          <label for="confirmPassword" class="auth__label">Confirmar contraseña</label>
+          <div class="password-wrapper">
+            <input id="confirmPassword" formControlName="confirmPassword"
+              [type]="showConfirmPassword ? 'text' : 'password'" class="auth__input" placeholder="**********" />
+            <button type="button" (click)="showConfirmPassword = !showConfirmPassword" class="toggle-password-btn" aria-label="Mostrar/Ocultar contraseña">
+              <svg *ngIf="!showConfirmPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <svg *ngIf="showConfirmPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.05 10.05 0 012.641-4.362M6.28 6.28A10.05 10.05 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.048 10.048 0 01-4.51 5.645M15 12a3 3 0 01-3 3m0 0a3 3 0 01-3-3m3 3L6.28 6.28" />
+              </svg>
+            </button>
+          </div>
+
+          <div *ngIf="controlHasError('confirmPassword', 'required') && form.get('confirmPassword')?.touched" class="error">
+            Confirmar la contraseña es obligatorio.
+          </div>
+          <div *ngIf="form.hasError('mismatch') && form.get('confirmPassword')?.touched && !controlHasError('confirmPassword', 'required')" class="error">
+            Las contraseñas no coinciden.
+          </div>
         </div>
 
-        <label for="confirmPassword" class="auth__label">Confirmar contraseña</label>
-        <input id="confirmPassword" formControlName="confirmPassword" type="password" class="auth__input" placeholder="**********" />
-        <div *ngIf="controlHasError('confirmPassword', 'required')" class="error">
-          Confirmar la contraseña es obligatorio.
-        </div>
-        <div *ngIf="form.controls['confirmPassword'].value !== form.controls['password'].value" class="error">
-          Las contraseñas no coinciden.
-        </div>
 
         <button type="submit" class="btn btn--primary auth__button" [disabled]="form.invalid">
           Crear cuenta
