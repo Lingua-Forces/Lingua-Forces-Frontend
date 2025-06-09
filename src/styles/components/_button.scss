@@ -42,3 +42,11 @@
   font-size: 1.1rem;
   color: white;
 }
+
+.btn--danger {
+  @include mixins.button-primary(
+    variables.$color-danger,
+    variables.$color-danger-hover
+  );
+  color: white;
+}

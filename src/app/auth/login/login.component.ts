@@ -6,10 +6,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginRequest } from '../../models/login-request';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { AuthHeaderComponent } from '../../shared/auth-header/auth-header.component';
+import { UtilsService } from '../../shared/utils/utils.service';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterModule, FormsModule,ReactiveFormsModule, NgIf ],
+  imports: [RouterModule, FormsModule,ReactiveFormsModule, NgIf, FooterComponent, AuthHeaderComponent ],
   templateUrl: './login.component.html',
   styleUrls: ['./../auth.module.scss'],
 })
@@ -21,7 +24,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private snackBar: MatSnackBar
+    private utils: UtilsService
   ) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,23 +46,23 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(credentials).subscribe({
       next: (response) => {       
-        this.showSnackBar('Inicio de sesión exitoso');
+        this.utils.showSnackBar('Inicio de sesión exitoso');
         this.router.navigate(['/eval']); // Redirigir a la página de inicio
       },
       
       error: (err) => {
         console.error('Error en el inicio de sesión:', err.message);
         if (err.status === 401) {
-          this.showSnackBar('El correo o la contraseña son incorrectos');
+          this.utils.showSnackBar('El correo o la contraseña son incorrectos');
         }
         else if (err.status === 403) {
-          this.showSnackBar('El usuario no está autorizado');
+          this.utils.showSnackBar('El usuario no está autorizado');
         }
         else if (err.status === 500) {
-          this.showSnackBar('El usuario no está verificado');
+          this.utils.showSnackBar('El usuario no está verificado');
         }
         else {
-          this.showSnackBar('Error en el inicio de sesión '+ err.status);
+          this.utils.showSnackBar('Error en el inicio de sesión '+ err.status);
         }
       },
     });
@@ -69,9 +72,4 @@ export class LoginComponent implements OnInit {
     return this.form.controls[control].hasError(error);
   }
 
-  private showSnackBar(message: string): void {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-    });
-  }
 }

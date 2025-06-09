@@ -9,24 +9,32 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatInputModule } from '@angular/material/input';  // Para los inputs
 import { MatFormFieldModule } from '@angular/material/form-field';  // Para los campos de formulario
 import { SignUpService } from '../services/sign-up.service';
+import { AuthHeaderComponent } from '../../shared/auth-header/auth-header.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { UtilsService } from '../../shared/utils/utils.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./../auth.module.scss'],
-  imports: [RouterModule, ReactiveFormsModule, CommonModule, MatFormFieldModule]
+  imports: [RouterModule, ReactiveFormsModule, CommonModule, MatFormFieldModule, AuthHeaderComponent, FooterComponent ],
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
 
-  constructor(private formBuilder: FormBuilder,private signUpService: SignUpService,private router: Router,private snackBar: MatSnackBar ) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private signUpService: SignUpService,
+    private router: Router,
+    private utils: UtilsService 
+  ) {
     this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$')],
+      lastName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$')],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
     }, {
       validators: this.passwordMatchValidator
@@ -51,11 +59,12 @@ export class RegisterComponent implements OnInit {
 
     this.signUpService.signup(registerRequest).subscribe({
       next: (response) => {
-        this.showSnackBar('Cuenta creada exitosamente');
+        localStorage.setItem('signupEmail', email);
+        this.utils.showSnackBar('Cuenta creada exitosamente. Verifica tu correo electrónico');
         this.router.navigate(['/login']); // Redirigir al login
       },
       error: (err) => {
-        this.showSnackBar('Hubo un problema al crear la cuenta');
+        this.utils.showSnackBar('Hubo un problema al crear la cuenta');
         console.error(err);
       },
     });
@@ -65,9 +74,4 @@ export class RegisterComponent implements OnInit {
     return this.form.controls[control].hasError(error);
   }
 
-  private showSnackBar(message: string): void {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-    });
-  }
 }

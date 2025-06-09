@@ -29,22 +29,19 @@ export class AuthService {
     }
   }
 
-      login(authRequest: LoginRequest) {
-        return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, authRequest)
-          .pipe(
-            map(response => {
-              localStorage.setItem(authKey, JSON.stringify(response));
-              this._auth.set(response);
-              return response.user;
-            })
-          );
-      }
-    
-  
+  login(authRequest: LoginRequest) {
+    return this.http.post<LoginResponse>(`${environment.apiUrl}/auth/login`, authRequest)
+      .pipe(
+        map(response => {
+          localStorage.setItem(authKey, JSON.stringify(response));
+          this._auth.set(response);
+          return response.user;
+        })
+      );
+  }
 
   logout() {
     localStorage.removeItem(authKey);
-    //this._auth = undefined;
     this._auth.set(null);
   }
 

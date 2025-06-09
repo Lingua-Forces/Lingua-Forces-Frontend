@@ -1,0 +1,29 @@
+@use 'utils/variables' as *;
+
+.auth-footer {
+  width: 100%;
+  background-color: white;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__nav {
+    display: flex;
+    gap: 1rem;
+
+    a {
+      font-size: $text-2-font-size;
+      color: #000;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__text {
+    margin-bottom: 0; // Para mantener alineado con la nav
+  }
+}

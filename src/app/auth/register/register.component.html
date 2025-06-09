@@ -1,12 +1,5 @@
 <div class="auth">
-  <header class="auth__header">
-    <div class="auth__brand" [routerLink]="'/home'">LinguaForces</div>
-    <div class="auth__actions">
-      <button class="btn btn--ghost" [routerLink]="'/login'">Login</button>
-      <button class="btn btn--primary" [routerLink]="'/register'">Register</button>
-    </div>
-  </header>
-
+  <app-auth-header></app-auth-header>
   <main class="auth__main">
     <section class="auth__card card">
       <h1 class="auth__title">Crea tu cuenta</h1>
@@ -59,7 +52,7 @@
             La contraseña es obligatoria.
           </div>
           <div *ngIf="controlHasError('password', 'minlength')" class="error">
-            La contraseña debe tener al menos 6 caracteres.
+            La contraseña debe tener al menos 8 caracteres.
           </div>
         </div>
 
@@ -100,12 +93,5 @@
     </section>
   </main>
 
-  <footer class="auth__footer">
-    <p>2024 LinguaForces. All rights reserved</p>
-    <nav class="footer__nav">
-      <a href="#">Terms</a>
-      <a href="#">Privacy</a>
-      <a href="#">Contact</a>
-    </nav>
-  </footer>
+  <app-footer></app-footer>
 </div>

@@ -1,57 +1,66 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { SignUpService } from '../services/sign-up.service';
+import { AuthHeaderComponent } from '../../shared/auth-header/auth-header.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { UtilsService } from '../../shared/utils/utils.service';
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
   styleUrl: './../auth.module.scss',
-  imports: [RouterModule],
+  imports: [RouterModule, AuthHeaderComponent, FooterComponent],
 })
 export class VerifyComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private signUpService: SignUpService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private utils: UtilsService
   ) { }
 
   ngOnInit(): void {
     const token = this.route.snapshot.queryParams['token'];
     console.log('Token:', token);
-    
+
     if (token) {
       this.signUpService.verify(token).subscribe({
         next: (response) => {
           console.log('Verificación exitosa:', response);
           localStorage.removeItem('signupEmail');
-          this.router.navigate(['']);
-          this.showSnackBar('Verificación exitosa');
-          
+          this.router.navigate(['eval']);
+          this.utils.showSnackBar('Verificación exitosa');
+
         },
         error: (error) => {
           console.error('Error en la verificación:', error);
-          this.showSnackBar('Error en la verificación');
+          this.utils.showSnackBar('Error en la verificación');
         }
       }
       );
     } else {
       console.error('Token no encontrado en la URL');
-      
+
     }
   }
-  private showSnackBar(message: string): void {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 3000,
+
+  resendVerification(): void {
+    const email = localStorage.getItem('signupEmail');
+
+    if (!email) {
+      this.utils.showSnackBar('No se encontró un correo electrónico para reenviar la verificación');
+      return;
+    }
+
+    this.signUpService.resendVerificationEmail({ email }).subscribe({
+      next: () => {
+        this.utils.showSnackBar('Correo de verificación reenviado');
+      },
+      error: (error) => {
+        console.error('Error al reenviar correo:', error);
+        this.utils.showSnackBar('Error al reenviar el correo de verificación');
+      }
     });
   }
-  resendVerification(): void {
-    // Aquí puedes integrar tu lógica para reenviar el código, por ejemplo:
-    // this.authService.resendVerificationEmail().subscribe(...);
-    alert('Código de verificación reenviado (simulado).');
-    // También podrías redirigir al login o mostrar un mensaje.
-    // post  a service to resend the verification email
-    
-  }
-  
+
+
 }
