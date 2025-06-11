@@ -14,13 +14,18 @@ $color-danger-hover: #b91c1c;
 
 $color-disabled: #a5b4fc;
 
-// Colores y fuentes para landing
-$primary-bluehover: #2563eb;
-$background-3: #f3f4f6;
-
+// Textos y fuentes
 $semibold-header-1-font-size: 2rem;
-
-$extra-bold-header1-font-size: 3rem; // ajusta según diseño real
+$extra-bold-header1-font-size: 3rem;
 
 $text-1-font-size: 1rem;
 $text-2-font-size: 0.875rem;
+
+
+// Responsive breakpoints
+$breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px
+);

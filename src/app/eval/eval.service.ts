@@ -1,6 +1,7 @@
+// eval.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { EvalQuestion } from '../models/eval-question';
+import { Question } from '../models/question';
 import { EvalResponse } from '../models/eval-response';
 import { delay } from 'rxjs/operators';
 
@@ -8,21 +9,37 @@ import { delay } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EvalService {
-  getQuestions(): Observable<EvalQuestion[]> {
-    const mockQuestions: EvalQuestion[] = [
-      { id: 1, question: 'What are your goals for learning English?' },
-      { id: 2, question: 'Describe your daily routine in English.' },
-      { id: 3, question: 'What do you like to do in your free time?' },
-      { id: 4, question: 'Tell me about your family.' },
-      { id: 5, question: 'Why do you want to improve your English?' }
+  getQuestions(): Observable<Question[]> {
+    const mockQuestions: Question[] = [
+      {
+        id: '1',
+        prompt: 'What are your goals for learning English?',
+        type: 'free_text',
+        skill: 'writing',
+        level: 'A2',
+        elo: 1000,
+        options: [],
+        readingText: '',
+        questions: []
+      },
+      {
+        id: '2',
+        prompt: 'Describe your daily routine in English.',
+        type: 'free_text',
+        skill: 'writing',
+        level: 'A2',
+        elo: 1000,
+        options: [],
+        readingText: '',
+        questions: []
+      }
     ];
 
-    return of(mockQuestions).pipe(delay(500)); // simula carga desde backend
+    return of(mockQuestions).pipe(delay(500));
   }
 
   submitResponses(responses: EvalResponse[]) {
     console.log('Respuestas enviadas:', responses);
-    // Aquí harías un POST real
     return of({ success: true }).pipe(delay(500));
   }
 }

@@ -1,14 +1,18 @@
 <header class="main-header">
-  <div class="main-header__brand">LinguaForces</div>
+  <div class="main-header__left">
+    <div class="main-header__brand" [routerLink]="'/home'">LinguaForces</div>
+  </div>
 
-  <nav class="main-header__nav">
-    <button class="btn--primary btn">Evaluación</button>
+  <nav class="main-header__nav" [class.open]="navOpen">
+    <button class="btn btn--primary">Evaluación</button>
     <button class="btn">Entrenamiento</button>
     <button class="btn">Progreso</button>
+    <button class="btn btn--danger mobile-logout" (click)="logout()">Logout</button>
   </nav>
 
-  <div class="main-header__user">
+  <div class="main-header__right">
     <img class="main-header__avatar" src="assets/images/userProfilePicture.png" alt="Avatar" />
-    <button class="btn btn--danger" (click)="logout()">Logout</button>
+    <button class="btn btn--danger desktop-logout" (click)="logout()">Logout</button>
+    <button class="main-header__menu" (click)="toggleNav()">☰</button>
   </div>
 </header>

@@ -1,0 +1,30 @@
+<app-main-header />
+
+<section class="results-content" *ngIf="result; else loading">
+  <div class="results__container">
+    <h1 class="results__title">Resultados de tu Evaluación</h1>
+    <p class="results__date">Evaluado el: {{ result.evaluatedAt | date: 'long' }}</p>
+
+    <div class="results__summary card">
+      <h2>Nivel alcanzado: {{ result.cefrLevel }}</h2>
+      <p>Tipo de evaluación: {{ result.type }}</p>
+      <p><strong>Puntaje General:</strong> {{ result.overallScore }}</p>
+    </div>
+
+    <div class="results__details card">
+      <h3>Resultados por categoría:</h3>
+      <ul>
+        <li><strong>Vocabulario:</strong> {{ result.vocabularyScore }}</li>
+        <li><strong>Gramática:</strong> {{ result.grammarScore }}</li>
+        <li><strong>Convenciones:</strong> {{ result.conventionsScore }}</li>
+        <li><strong>Sintaxis:</strong> {{ result.sintaxScore }}</li>
+        <li><strong>Cohesión:</strong> {{ result.cohesionScore }}</li>
+        <li><strong>Fraseología:</strong> {{ result.phraseologyScore }}</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<ng-template #loading>
+  <p class="loading">Cargando resultados...</p>
+</ng-template>

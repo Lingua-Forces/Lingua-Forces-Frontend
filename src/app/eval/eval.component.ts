@@ -1,10 +1,12 @@
+// eval.component.ts
 import { Component, OnInit } from '@angular/core';
 import { EvalService } from './eval.service';
-import { EvalQuestion } from '../models/eval-question';
+import { Question } from '../models/question';
 import { EvalResponse } from '../models/eval-response';
 import { MainHeaderComponent } from '../shared/main-header/main-header.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-eval',
@@ -14,12 +16,12 @@ import { CommonModule } from '@angular/common';
   imports: [MainHeaderComponent, FormsModule, CommonModule]
 })
 export class EvalComponent implements OnInit {
-  questions: EvalQuestion[] = [];
+  questions: Question[] = [];
   currentIndex = 0;
   answers: EvalResponse[] = [];
   currentAnswer = '';
 
-  constructor(private evalService: EvalService) {}
+  constructor(private evalService: EvalService, private router: Router) {}
 
   ngOnInit(): void {
     this.evalService.getQuestions().subscribe((qs) => {
@@ -27,7 +29,7 @@ export class EvalComponent implements OnInit {
     });
   }
 
-  get currentQuestion(): EvalQuestion | null {
+  get currentQuestion(): Question | null {
     return this.questions[this.currentIndex] ?? null;
   }
 
@@ -48,9 +50,10 @@ export class EvalComponent implements OnInit {
   }
 
   submit() {
-    this.evalService.submitResponses(this.answers).subscribe((res) => {
+    this.evalService.submitResponses(this.answers).subscribe(() => {
       alert('Respuestas enviadas correctamente.');
-      // Redirigir a otra página o mostrar resumen, etc.
+      this.router.navigate(['/results']);
+
     });
   }
 }

@@ -13,7 +13,7 @@
     <div class="card evaluation__card">
       <h2 class="evaluation__instructions">Instrucciones</h2>
       <p>Escribe una breve respuesta en inglés a la siguiente pregunta:</p>
-      <p class="evaluation__question"><strong>{{ currentQuestion.question }}</strong></p>
+      <p class="evaluation__question"><strong>{{ currentQuestion.prompt }}</strong></p>
 
       <textarea
         class="evaluation__textarea"
@@ -21,8 +21,11 @@
         rows="5"
         [(ngModel)]="currentAnswer"
       ></textarea>
+      <div style="color: red;font-size: 0.9rem; margin-bottom: 0.9rem;" *ngIf="currentAnswer.trim().length > 0 && currentAnswer.trim().length < 100">
+          Tu respuesta debe tener al menos 100 caracteres.
+      </div>
 
-      <button class="btn btn--primary evaluation__button" (click)="nextQuestion()" [disabled]="!currentAnswer.trim()">
+      <button class="btn btn--primary evaluation__button" (click)="nextQuestion()" [disabled]="currentAnswer.trim().length < 100">
         {{ currentIndex + 1 === questions.length ? 'Enviar respuestas' : 'Siguiente pregunta' }}
       </button>
     </div>
