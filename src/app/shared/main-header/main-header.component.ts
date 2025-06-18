@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { RouterLink } from '@angular/router';
+import { EvalComponent } from '../../eval/eval.component';
+import { TrainComponent } from '../../train/train.component';
 
 @Component({
   selector: 'app-main-header',

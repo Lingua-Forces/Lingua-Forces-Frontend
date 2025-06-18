@@ -4,8 +4,8 @@
   </div>
 
   <nav class="main-header__nav" [class.open]="navOpen">
-    <button class="btn btn--primary">Evaluación</button>
-    <button class="btn">Entrenamiento</button>
+    <button class="btn btn--primary" [routerLink]="'/eval'">Evaluación</button>
+    <button class="btn" [routerLink]="'/train'">Entrenamiento</button>
     <button class="btn">Progreso</button>
     <button class="btn btn--danger mobile-logout" (click)="logout()">Logout</button>
   </nav>

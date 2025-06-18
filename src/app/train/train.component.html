@@ -1,0 +1,29 @@
+<app-main-header />
+
+<section class="train-content">
+  <div class="train__container">
+    <h1 class="train__title">Entrenamiento adaptativo</h1>
+    <p class="train__subtitle">Cada ejercicio te acerca más a dominar el inglés. ¡Tú puedes!</p>
+
+    <div class="card train__card">
+      <h2 class="train__instructions">Elige la alternativa correcta</h2>
+      <p class="train__question"><strong>{{ "asd" }}</strong></p>
+
+      <ul class="train__options">
+        <li *ngFor="let option of currentQuestion?.options">
+          <label class="train__option">
+            <input type="radio" name="answer" [value]="option" [(ngModel)]="selectedOption" />
+            {{ "option" }}
+          </label>
+        </li>
+      </ul>
+
+      <button class="btn btn--primary train__button" [disabled]="!selectedOption" click="submitAnswer()">
+        Enviar
+      </button>
+      <button class="btn btn--primary train__button" [disabled]="!selectedOption" click="nextQuestion()">
+        Siguiente
+      </button>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,56 @@
+.train-content {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.train__container {
+  max-width: 700px;
+  width: 100%;
+}
+
+.train__title,
+.train__subtitle {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.train__instructions {
+  margin-bottom: 0.5rem;
+}
+
+.train__question {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.train__options {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+
+  li {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.train__option {
+  display: block;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  input[type='radio'] {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    background-color: #f3f4f6;
+  }
+}
+
+.train__button {
+  width: 100%;
+}
