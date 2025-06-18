@@ -5,12 +5,13 @@ import { delay, map, tap } from 'rxjs/operators';
 import { Question } from '../models/question';
 import { EvalResponse } from '../models/eval-response';
 import { EvaluationResult } from '../models/evaluation-result';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvalService {
-  private readonly baseUrl = 'http://localhost:8080/eval/placement';
+  private readonly baseUrl = `${environment.apiUrl}/eval/placement`;
   private latestResult: EvaluationResult | null = null;
 
   constructor(private http: HttpClient) {}

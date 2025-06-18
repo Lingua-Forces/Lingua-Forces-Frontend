@@ -1,4 +1,4 @@
 export interface EvalResponse {
   questionId: string;
-  answer: string;
+  userAnswer: string;
 }

@@ -38,7 +38,7 @@ export class EvalComponent implements OnInit {
 
     this.answers.push({
       questionId: this.currentQuestion.id,
-      answer: this.currentAnswer.trim()
+      userAnswer: this.currentAnswer.trim()
     });
 
     this.currentAnswer = '';
