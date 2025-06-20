@@ -1,7 +1,7 @@
 import { Option } from './option';
 
 export interface EmbeddedQuestion {
-  questionId: string;
+  id: string;
   prompt: string;
   skill: string;
   elo: number;

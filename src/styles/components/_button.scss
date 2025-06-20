@@ -13,7 +13,9 @@
   align-items: center;
   justify-content: center;
 }
-
+.btn[disabled] {
+  cursor: not-allowed;
+}
 .btn--primary {
   @include mixins.button-primary(
     variables.$color-primary,

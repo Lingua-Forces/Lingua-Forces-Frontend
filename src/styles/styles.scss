@@ -1,6 +1,8 @@
 @use 'utils/mixins';
 @use 'utils/variables';
+@use 'utils/headers';
 @use 'components/card';
+@use 'components/modal';
 @use 'components/button';
 
 /* Reset básico */
@@ -15,6 +17,7 @@ html, body {
   height: 100%;
   width: 100%;
   font-family: Arial, sans-serif; // 👈 si estás usando Arial globalmente
+  background-color: variables.$color-background;
 }
 
 .error {
@@ -35,3 +38,6 @@ input[type="password"]::-webkit-inner-spin-button,
 input[type="password"]::-webkit-textfield-decoration-container {
   display: none !important;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

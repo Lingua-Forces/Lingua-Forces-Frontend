@@ -1,29 +1,78 @@
-<app-main-header />
+<app-main-header></app-main-header>
 
 <section class="train-content">
   <div class="train__container">
-    <h1 class="train__title">Entrenamiento adaptativo</h1>
-    <p class="train__subtitle">Cada ejercicio te acerca más a dominar el inglés. ¡Tú puedes!</p>
+    <h1 class="header-1">Adaptive Training</h1>
+    <p class="subtitle">
+      Each exercise brings you closer to mastering English. You can do it!
+    </p>
 
-    <div class="card train__card">
-      <h2 class="train__instructions">Elige la alternativa correcta</h2>
-      <p class="train__question"><strong>{{ "asd" }}</strong></p>
+    <div class="card" *ngIf="currentQuestion">
+      <h2 class="header-2">Choose the right alternative</h2>
+      <div class="streak-info">
+        🔥 Current streak: {{ userStreak }}
+      </div>
 
+      <p class="text-body" *ngIf="currentQuestion.readingText">
+        {{ currentQuestion.readingText }}
+      </p>
+
+      <h3 class="header-3">{{ currentQuestion.prompt }}</h3>
       <ul class="train__options">
-        <li *ngFor="let option of currentQuestion?.options">
+        <li *ngFor="let option of currentQuestion.options">
           <label class="train__option">
-            <input type="radio" name="answer" [value]="option" [(ngModel)]="selectedOption" />
-            {{ "option" }}
+            <input type="radio" name="answer" [value]="option.text" [(ngModel)]="selectedOption"
+              (change)="onOptionChange(option)" />
+            {{ option.text }}
           </label>
         </li>
       </ul>
 
-      <button class="btn btn--primary train__button" [disabled]="!selectedOption" click="submitAnswer()">
-        Enviar
-      </button>
-      <button class="btn btn--primary train__button" [disabled]="!selectedOption" click="nextQuestion()">
-        Siguiente
+      <button class="btn btn--primary" [disabled]="!selectedOption" (click)="submitAnswer()">
+        Submit
       </button>
     </div>
+    <div class="elo-bar-container">
+      <!-- Marcador arriba (usuario) -->
+      <div class="elo-marker user-elo" [ngStyle]="{ left: (userElo / 3000 * 100) + '%' }">
+        👤 {{ userElo }}
+      </div>
+
+      <!-- La barra de dificultad -->
+      <div class="elo-bar">
+        <div class="elo-segment" *ngFor="let label of ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']; let i = index"
+          [ngStyle]="{ 'background-color': getColorForRange(i * 500) }">
+          {{ label }}
+        </div>
+      </div>
+
+
+      <!-- Marcador abajo (pregunta) -->
+      <div class="elo-marker question-elo" *ngIf="currentQuestion"
+        [ngStyle]="{ left: (currentQuestion.elo / 3000 * 100) + '%' }">
+        ❓ {{ currentQuestion.elo }}
+      </div>
+    </div>
+
   </div>
+
+
 </section>
+<ng-template #resultDialog>
+  <div [ngClass]="selectedKey === trainingResponse?.correctAnswer ? 'result correct' : 'result incorrect'">
+    <h2 mat-dialog-title>
+      {{ selectedKey === trainingResponse?.correctAnswer ? '🎉 ¡Correct!' : '❌ Incorrect' }}
+    </h2>
+
+    <mat-dialog-content>
+      <p>Your answer: <strong>{{ selectedOption }}</strong></p>
+      <p *ngIf="selectedKey !== trainingResponse?.correctAnswer">
+        The correct answer is: <strong>{{ trainingResponse?.correctAnswer }}</strong>
+      </p>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="nextQuestion(); closeResultModal()">Next</button>
+    </mat-dialog-actions>
+  </div>
+</ng-template>

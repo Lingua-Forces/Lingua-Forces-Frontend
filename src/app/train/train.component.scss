@@ -1,7 +1,10 @@
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+
 .train-content {
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  padding: 4rem;
 }
 
 .train__container {
@@ -50,7 +53,81 @@
     background-color: #f3f4f6;
   }
 }
+.elo-bar-container {
+  position: relative;
+  margin-top: 4rem;
+  margin-bottom: 3rem; // espacio para el marcador inferior
+}
 
-.train__button {
-  width: 100%;
+.elo-bar {
+  display: flex;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.elo-segment {
+  flex: 1;
+  line-height: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.elo-marker {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 800;
+  padding: 2px 4px;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.user-elo {
+  top: -28px;;
+  color: #1e88e5;
+}
+
+.question-elo {
+  top: 40px;
+  color: #e53935;
+}
+
+.streak-info {
+  font-weight: bold;
+  color: #ff9800;
+  margin-bottom: 1rem;
+}
+
+
+///
+/// 
+
+::ng-deep .custom-result-dialog .mat-dialog-container {
+  // border-radius: 100px;
+  padding: 24px;
+  max-width: 400px;
+  text-align: center;
+}
+
+::ng-deep .custom-result-dialog .result.correct {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+::ng-deep .custom-result-dialog .result.incorrect {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+::ng-deep .custom-result-dialog h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+::ng-deep .custom-result-dialog mat-dialog-content p {
+  font-size: 16px;
+  margin: 8px 0;
 }
