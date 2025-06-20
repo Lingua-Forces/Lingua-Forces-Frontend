@@ -44,7 +44,6 @@ export class EvalService {
         elo: 1000,
         options: [],
         readingText: '',
-        questions: []
       },
       {
         id: '2',
@@ -55,7 +54,6 @@ export class EvalService {
         elo: 1000,
         options: [],
         readingText: '',
-        questions: []
       }
     ];
 

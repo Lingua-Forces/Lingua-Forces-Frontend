@@ -3,6 +3,9 @@ import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Question } from '../models/question';
 import { Observable } from 'rxjs';
+import { UserAnswer } from '../models/user-answer';
+import { TrainingResponse } from '../models/training-response';
+import { StatsResponse } from '../models/stats-response';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +16,13 @@ export class TrainService {
   getQuestion(){
     return this.http.get<Question>(`${this.baseUrl}/getQuestion`);
   }
-  sendAnswer(p0: { questionId: string; selectedOption: string; }): Observable<void>
-  {
-    return this.http.post<void>(`${this.baseUrl}/sendAnswer`, p0);
+  submitAnswer(userAnswer: UserAnswer): Observable<TrainingResponse>{
+    return this.http.post<TrainingResponse>(`${this.baseUrl}/submitAnswer`, userAnswer);
+  }
+  getStats(): Observable<StatsResponse> {
+    return this.http.get<StatsResponse>( `${environment.apiUrl}/stats`);
+  }
+  getCorrectAnswer(question: Question): Observable<string> {
+    return this.http.get<string>(`${this.baseUrl}/getCorrectAnswer/${question.id}`);
   }
 }

@@ -1,0 +1,43 @@
+@use 'utils/variables' as *;
+@use 'utils/mixins' as *;
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); // Fondo oscuro semitransparente
+  z-index: 999; // Asegura que esté detrás del modal pero encima del resto
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  z-index: 1000; // Asegura que esté encima del backdrop
+  max-width: 90%;
+  width: 400px;
+
+  .modal-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+  .modal-body {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+}

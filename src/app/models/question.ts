@@ -1,5 +1,4 @@
 import { Option } from './option';
-import { EmbeddedQuestion } from './embedded-question';
 
 export interface Question {
   id: string;
@@ -10,5 +9,4 @@ export interface Question {
   elo: number;
   options?: Option[];
   readingText?: string;
-  questions?: EmbeddedQuestion[];
 }

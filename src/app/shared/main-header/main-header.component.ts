@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { RouterLink } from '@angular/router';
-import { EvalComponent } from '../../eval/eval.component';
-import { TrainComponent } from '../../train/train.component';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 

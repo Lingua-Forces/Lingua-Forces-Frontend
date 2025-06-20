@@ -1,6 +1,8 @@
 @use 'utils/mixins';
 @use 'utils/variables';
+@use 'utils/headers';
 @use 'components/card';
+@use 'components/modal';
 @use 'components/button';
 
 /* Reset básico */
@@ -15,6 +17,7 @@ html, body {
   height: 100%;
   width: 100%;
   font-family: Arial, sans-serif; // 👈 si estás usando Arial globalmente
+  background-color: variables.$color-background;
 }
 
 .error {
