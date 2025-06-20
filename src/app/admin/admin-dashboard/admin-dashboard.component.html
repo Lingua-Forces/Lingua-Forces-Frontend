@@ -1,0 +1,77 @@
+<app-admin-header />
+<app-model-log-search
+  [userIds]="userIds"
+  (search)="onSearch($event)">
+</app-model-log-search>
+
+<!-- Mensaje antes de buscar -->
+<div *ngIf="!hasSearched" class="placeholder">
+  Por favor elige filtros y pulsa “Buscar” para ver los KPI y gráficos.
+</div>
+
+<ng-container *ngIf="dashboard">
+  <div class="dashboard-row">
+    <div class="kpi-col">
+      <app-kpi-card
+        *ngFor="let c of [dashboard.kpiTotalExecutions, dashboard.kpiDailyAverage, dashboard.kpiAvgInferenceTime]"
+        class="mat-elevation-z4"
+        [label]="c.label"
+        [value]="c.value">
+      </app-kpi-card>
+    </div>
+    <div class="line-chart-col">
+      <app-line-chart
+        [data]="dashboard.executionsOverTime"
+        title="Ejecuciones por día"
+        xAxisLabel="Fecha"
+        yAxisLabel="Cantidad">
+      </app-line-chart>
+    </div>
+  </div>
+
+  <div class="dashboard-row" *ngIf = "selectedModelType === 'nlp'">
+  <div class="bar-chart-col">
+    <app-grouped-bar-chart
+      title="Frecuencia de criterios"
+      [data]="dashboard.scoreDistributionByCriterion || []"
+      xAxisLabel="Criterio"
+      yAxisLabel="Frecuencia">
+    </app-grouped-bar-chart>
+  </div>
+  <div class="bar-chart-col">
+    <app-grouped-bar-chart
+      title="Promedio por criterio"
+      [data]="dashboard.avgScoreByCriterion || []"
+      xAxisLabel="Criterio"
+      yAxisLabel="Promedio">
+    </app-grouped-bar-chart>
+  </div>
+  </div>
+
+  <div class="dashboard-row" *ngIf = "selectedModelType === 'rl'">
+    <div class="bar-chart-col">
+      <app-line-chart
+          [data]="dashboard.eloProgressOverTime || []"
+          title="Evolución de ELO del usuario y ELO de la pregunta"
+          xAxisLabel="Fecha"
+          yAxisLabel="ELO">
+      </app-line-chart>
+    </div>
+    <div class="bar-chart-col">
+      <app-line-chart
+          [data]="dashboard.successRateByEloDiff || []"
+          title="Tasa de acierto según diferencia de ELO (usuario - pregunta)"
+          xAxisLabel="Diferencial de ELO (ELO usuario – ELO pregunta)"
+          yAxisLabel="Porcentaje de aciertos (%)">
+      </app-line-chart>
+    </div>
+  </div>
+
+  <div class="dashboard-row">
+    <app-logs-table
+      [logs]="dashboard.lastExecutions"
+      [displayedColumns]="displayedColumns"
+      [selectedModelType]="selectedModelType">
+    </app-logs-table>
+  </div>
+</ng-container>

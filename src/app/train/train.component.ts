@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MainHeaderComponent } from '../shared/main-header/main-header.component';
-import { TrainService } from './train.service'; // lo debes crear
+import { TrainService } from './train.service';
 import { Question } from '../models/question';
 
 @Component({
@@ -17,7 +17,7 @@ import { Question } from '../models/question';
 export class TrainComponent implements OnInit {
   currentQuestion: Question | null = null;
   currentIndex: number = 0;
-  selectedOption: string = '';
+  selectedOptions: string[] = [];
   isLoading = true;
   MAX_QUESTIONS = 5;
 
@@ -31,8 +31,10 @@ export class TrainComponent implements OnInit {
     this.isLoading = true;
     this.trainService.getQuestion().subscribe({
       next: (question: Question) => {
+        console.log('Pregunta recibida:', question);
         this.currentQuestion = question;
-        this.selectedOption = '';
+        // Inicializa el array de respuestas (una por cada pregunta embebida)
+        this.selectedOptions = question.questions?.map(() => '') || [];
         this.isLoading = false;
       },
       error: (err: any) => {
@@ -42,26 +44,17 @@ export class TrainComponent implements OnInit {
     });
   }
 
-  submitAnswer(): void {
-    if (!this.selectedOption || !this.currentQuestion) return;
+ allAnswered(): boolean {
+  return !!(
+    this.currentQuestion &&
+    this.currentQuestion.questions &&
+    this.selectedOptions.length === this.currentQuestion.questions.length &&
+    this.selectedOptions.every(opt => !!opt)
+  );
+}
 
-    this.trainService.sendAnswer({
-      questionId: this.currentQuestion.id,
-      selectedOption: this.selectedOption
-    }).subscribe({
-      next: () => {
-        this.currentIndex++;
-        if (this.currentIndex < this.MAX_QUESTIONS) {
-          this.fetchQuestion();
-        } else {
-          this.router.navigate(['/train/result']);
-        }
-      },
-      error: (err: any) => {
-        console.error('Error al enviar respuesta', err);
-      }
-    });
-  }
+
+
   nextQuestion(): void {
     if (this.currentIndex < this.MAX_QUESTIONS - 1) {
       this.currentIndex++;

@@ -1,19 +1,18 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // Verificar si el usuario está autenticado
   const auth = authService.auth();
   // Verificar si el usuario está autenticado y es admin
-  if(auth && auth.user?.role === 'USER'){
+  if(auth && auth.user?.role === 'ADMIN'){
       return true;
   }
 
-  // Usuario no autenticado, redirigir al componente de inicio de sesión
+  // Usuario no es admin o no está autenticado, redirigir al login (o a otra ruta si lo prefieres)
   router.navigate(['login']);
   return false;
 };

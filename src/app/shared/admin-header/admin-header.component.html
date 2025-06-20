@@ -1,0 +1,15 @@
+<header class="admin-header">
+  <div class="admin-header__left">
+    <div class="admin-header__brand" [routerLink]="'/home'">LinguaForces</div>
+  </div>
+
+  <nav class="admin-header__nav">
+    <h2  [routerLink]="'/admin-dashboard'">DASHBOARD ANÁLISIS DE MODELOS </h2>
+  </nav>
+
+  <div class="admin-header__right">
+    <img class="admin-header__avatar" src="assets/images/userProfilePicture.png" alt="Avatar" />
+    <button class="btn btn--danger desktop-logout" (click)="logout()">Logout</button>
+    <button class="admin-header__menu" (click)="toggleNav()">☰</button>
+  </div>
+</header>

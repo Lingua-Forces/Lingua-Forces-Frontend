@@ -9,6 +9,8 @@ import { NgIf } from '@angular/common';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { AuthHeaderComponent } from '../../shared/auth-header/auth-header.component';
 import { UtilsService } from '../../shared/utils/utils.service';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +19,13 @@ import { UtilsService } from '../../shared/utils/utils.service';
   styleUrls: ['./../auth.module.scss'],
 })
 export class LoginComponent implements OnInit {
+  private readonly apiUrl = `${environment.apiUrl}/stats/placement/status`;
   form: FormGroup;
   showPassword = false;
-
+  canTrain: boolean = false;
   constructor(
     private authService: AuthService,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router,
     private utils: UtilsService
@@ -33,10 +37,23 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.auth()) {
-      this.router.navigate(['/eval']);
+  const authData = this.authService.auth();
+  if (authData) {
+    if (authData.user?.role === 'ADMIN') {
+      this.router.navigate(['/admin-dashboard']);
+    } else {
+      this.checkPlacementStatus()
+      if (!this.canTrain) {
+        this.router.navigate(['/eval']);
+      }
+      else {
+        this.router.navigate(['/train']);
+      }
+        
+
     }
   }
+}
 
   login(): void {
     if (this.form.invalid) {
@@ -47,7 +64,18 @@ export class LoginComponent implements OnInit {
     this.authService.login(credentials).subscribe({
       next: (response) => {       
         this.utils.showSnackBar('Inicio de sesión exitoso');
-        this.router.navigate(['/eval']); // Redirigir a la página de inicio
+        if (response.role === 'ADMIN') {
+          this.router.navigate(['/admin-dashboard']);
+        }
+        else{
+          this.checkPlacementStatus()
+          if (!this.canTrain) {
+            this.router.navigate(['/eval']);
+          }
+          else {
+            this.router.navigate(['/train']);
+          }
+        }
       },
       
       error: (err) => {
@@ -66,6 +94,17 @@ export class LoginComponent implements OnInit {
         }
       },
     });
+  }
+
+  checkPlacementStatus(): void {
+    this.http.get<boolean>(this.apiUrl)
+      .subscribe({
+        next: (res) => this.canTrain = res,
+        error: (err) => {
+          console.error('Error al obtener estado del placement', err);
+          this.canTrain = false;
+        }
+      });
   }
 
   controlHasError(control: string, error: string) {

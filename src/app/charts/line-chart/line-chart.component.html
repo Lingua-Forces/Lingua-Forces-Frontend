@@ -1,0 +1,12 @@
+<div *ngIf="title" class="chart-title">{{ title }}</div>
+<ngx-charts-line-chart
+  [results]="data"
+  [xAxis]="true"
+  [yAxis]="true"
+  [legend]="true"
+  [showXAxisLabel]="true"
+  [showYAxisLabel]="true"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [autoScale]="true">
+</ngx-charts-line-chart>

@@ -1,0 +1,14 @@
+<div *ngIf="title" class="chart-title">{{ title }}</div>
+<ngx-charts-bar-vertical-2d
+  [results]="data"
+  [xAxis]="true"
+  [yAxis]="true"
+  [legend]="true"
+  [showXAxisLabel]="true"
+  [showYAxisLabel]="true"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [groupPadding]="16"
+  [barPadding]="8"
+  [roundEdges]="true">
+</ngx-charts-bar-vertical-2d>

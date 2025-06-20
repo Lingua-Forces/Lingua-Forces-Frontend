@@ -7,21 +7,37 @@
 
     <div class="card train__card">
       <h2 class="train__instructions">Elige la alternativa correcta</h2>
-      <p class="train__question"><strong>{{ "asd" }}</strong></p>
+      <p class="">{{ currentQuestion?.readingText }}</p>
 
-      <ul class="train__options">
-        <li *ngFor="let option of currentQuestion?.options">
-          <label class="train__option">
-            <input type="radio" name="answer" [value]="option" [(ngModel)]="selectedOption" />
-            {{ "option" }}
-          </label>
-        </li>
-      </ul>
+      <ng-container *ngFor="let q of currentQuestion?.questions; let qi = index">
+        <div class="train__embedded-question">
+          <p><strong>{{ qi + 1 }}. {{ q.prompt }}</strong></p>
+          <ul class="train__options">
+            <li *ngFor="let opt of q.options">
+              <label class="train__option">
+                <input 
+                  type="radio"
+                  name="answer{{qi}}"      
+                  [value]="opt.key"
+                  [(ngModel)]="selectedOptions[qi]"
+                />
+                {{ opt.text }}
+              </label>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
 
-      <button class="btn btn--primary train__button" [disabled]="!selectedOption" click="submitAnswer()">
+      <button
+        class="btn btn--primary train__button"
+        [disabled]="!allAnswered()"
+      >
         Enviar
       </button>
-      <button class="btn btn--primary train__button" [disabled]="!selectedOption" click="nextQuestion()">
+      <button
+        class="btn btn--primary train__button"
+        (click)="nextQuestion()"
+      >
         Siguiente
       </button>
     </div>
