@@ -9,7 +9,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResultsComponent } from './results/results.component';
 import { TrainComponent } from './train/train.component';
-
+import { ProgressComponent } from './progress/progress.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,5 +22,6 @@ export const routes: Routes = [
   { path: 'eval', component: EvalComponent, canActivate: [authGuard] },
   { path: 'results', component: ResultsComponent, canActivate: [authGuard] },
   { path: 'train', component: TrainComponent, canActivate: [authGuard] }, // Assuming EvalComponent is used for training as well
+  { path: 'progress', component: ProgressComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '' }
 ];
