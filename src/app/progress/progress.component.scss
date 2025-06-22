@@ -1,9 +1,43 @@
-.heatmap-container {
-  height: 200px;
-  width: 100%;
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
 }
 
-#heatmap svg {
-  width: 100% !important;
-  height: 100% !important;
+.badges-section {
+  text-align: center;
+}
+
+.badges-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.badge-card {
+  width: 120px;
+  padding: 0.5rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: white;
+}
+
+.badge-image {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+  display: block;
+}
+
+.badge-label {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.heatmap-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
 }

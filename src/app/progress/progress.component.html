@@ -1,4 +1,36 @@
-<h2>Your Progress</h2>
-<p>Observe your progress over time.</p>
+<app-main-header />
 
-<div #heatmapContainer class="heatmap-container"></div>
+<main class="progress-content">
+  <section class="badges-section">
+    <h2 class="header-2">Logros desbloqueados</h2>
+
+    <div class="badges-grid">
+      <mat-card class="badge-card" *ngFor="let badge of badges" (click)="openBadgeModal(badge)">
+        <img class="badge-image" [src]="badge.img" [alt]="badge.name" />
+        <mat-card-content>
+          <p class="badge-label">{{ badge.name }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <mat-card class="heatmap-card">
+    <mat-card-header>
+      <mat-card-title class="header-2" style="padding: 1rem;">Your activity</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div #heatmapContainer style="width: 100%"></div>
+    </mat-card-content>
+  </mat-card>
+  <ng-template #badgeDialog let-data>
+    <h2 mat-dialog-title>{{ data.name }}</h2>
+    <mat-dialog-content>
+      <img [src]="data.img" alt="Badge" style="width: 100px; display: block; margin: auto;" />
+      <p style="text-align: center; margin-top: 1rem;">{{ data.description }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cerrar</button>
+    </mat-dialog-actions>
+  </ng-template>
+
+</main>
