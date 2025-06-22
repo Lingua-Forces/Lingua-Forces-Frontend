@@ -36,47 +36,47 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+async ngOnInit(): Promise<void> {
   const authData = this.authService.auth();
   if (authData) {
     if (authData.user?.role === 'ADMIN') {
       this.router.navigate(['/admin-dashboard']);
     } else {
-      this.checkPlacementStatus()
-      if (!this.canTrain) {
-        this.router.navigate(['/eval']);
+      await this.checkPlacementStatus(); // Espera a que termine
+      if (this.canTrain) {
+        this.router.navigate(['/progress']);
       }
       else {
-        this.router.navigate(['/train']);
+        this.router.navigate(['/eval']);
       }
-        
-
     }
   }
 }
 
-  login(): void {
-    if (this.form.invalid) {
-      return;
-    }
-    const credentials: LoginRequest = this.form.value as LoginRequest;
 
-    this.authService.login(credentials).subscribe({
-      next: (response) => {       
-        this.utils.showSnackBar('Inicio de sesión exitoso');
-        if (response.role === 'ADMIN') {
-          this.router.navigate(['/admin-dashboard']);
+async login(): Promise<void> {
+  if (this.form.invalid) {
+    return;
+  }
+  const credentials: LoginRequest = this.form.value as LoginRequest;
+
+  this.authService.login(credentials).subscribe({
+    next: async (response) => {       
+      this.utils.showSnackBar('Inicio de sesión exitoso');
+      if (response.role === 'ADMIN') {
+        this.router.navigate(['/admin-dashboard']);
+      }
+      else {
+        await this.checkPlacementStatus(); // Espera a que termine
+        console.log('Estado del placement:', this.canTrain);
+        if (this.canTrain) {
+          this.router.navigate(['/progress']);
         }
-        else{
-          this.checkPlacementStatus()
-          if (!this.canTrain) {
-            this.router.navigate(['/eval']);
-          }
-          else {
-            this.router.navigate(['/train']);
-          }
+        else {
+          this.router.navigate(['/eval']);
         }
-      },
+      }
+    },
       
       error: (err) => {
         console.error('Error en el inicio de sesión:', err.message);
@@ -96,17 +96,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  checkPlacementStatus(): void {
+checkPlacementStatus(): Promise<boolean> {
+  return new Promise((resolve) => {
     this.http.get<boolean>(this.apiUrl)
       .subscribe({
-        next: (res) => this.canTrain = res,
+        next: (res) => {
+          this.canTrain = res;
+          resolve(res);
+        },
         error: (err) => {
           console.error('Error al obtener estado del placement', err);
           this.canTrain = false;
+          resolve(false);
         }
       });
-  }
-
+  });
+}
   controlHasError(control: string, error: string) {
     return this.form.controls[control].hasError(error);
   }

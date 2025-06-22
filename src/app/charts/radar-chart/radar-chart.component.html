@@ -1,12 +1,14 @@
 <h3 *ngIf="title" class="chart-title">{{ title }}</h3>
-<ngx-charts-line-chart
+<ngx-charts-polar-chart
+  [view]="[400,225]"
   [results]="data"
   [xAxis]="true"
   [yAxis]="true"
-  [legend]="true"
-  [showXAxisLabel]="true"
-  [showYAxisLabel]="true"
+  [legend]="false"
+  [showXAxisLabel]="false"
+  [showYAxisLabel]="false"
   [xAxisLabel]="xAxisLabel"
   [yAxisLabel]="yAxisLabel"
+  [yAxisMinScale] = 5
   [autoScale]="true">
-</ngx-charts-line-chart>
+</ngx-charts-polar-chart>

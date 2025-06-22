@@ -1,0 +1,151 @@
+<app-main-header />
+
+<div class="dashboard-top-row">
+  <!-- Columna 1: Nivel y ELO -->
+  <div class="kpi-col">
+    <div class="kpi-card kpi-level">
+      <mat-icon class="kpi-icon" color="primary">school</mat-icon>
+      <div>
+        <div class="kpi-label">{{ dashboard.kpiUserLevel.label }}</div>
+        <div class="kpi-value">{{ dashboard.kpiUserLevel.value }}</div>
+      </div>
+    </div>
+    <div class="kpi-card kpi-elo">
+      <mat-icon class="kpi-icon" color="warn">star</mat-icon>
+      <div>
+        <div class="kpi-label">{{ dashboard.kpiUserElo.label }}</div>
+        <div class="kpi-value">{{ dashboard.kpiUserElo.value }}</div>
+      </div>
+    </div>
+  </div>
+  <!-- Columna 2: Racha más alta y racha actual -->
+  <div class="kpi-col">
+    <div class="kpi-card kpi-streak">
+      <mat-icon class="kpi-icon" color="accent">local_fire_department</mat-icon>
+      <div>
+        <div class="kpi-label">{{ dashboard.kpiUserMaxStreak.label }}</div>
+        <div class="kpi-value">{{ dashboard.kpiUserMaxStreak.value }}</div>
+      </div>
+    </div>
+    <div class="kpi-card kpi-current-streak">
+      <mat-icon class="kpi-icon" color="primary">bolt</mat-icon>
+      <div>
+        <div class="kpi-label">{{ dashboard.kpiUserCurrentStreak.label }}</div>
+        <div class="kpi-value">{{ dashboard.kpiUserCurrentStreak.value  }}</div>
+      </div>
+    </div>
+  </div>
+<div class="dashboard-card adv-pie-card">
+  <app-adv-pie-chart *ngIf="dashboard.correctAnswersProportion[0].value > 0 && dashboard.correctAnswersProportion[1].value > 0; else noData"
+    [title]="'Correct vs Incorrect Answers'"
+    [data]="dashboard.correctAnswersProportion"
+    [view]="[300,160]">
+  </app-adv-pie-chart>
+</div>
+    
+  <div class="badges-block">
+  <div class="badges-header">
+    <span class="badges-title">Badges</span>
+    <button class="badges-show-all-btn" (click)="openBadgesModal()">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+  <div class="badges-list">
+    <ng-container *ngFor="let badge of getVisibleBadges()">
+      <img
+        [src]="badge.img"
+        [alt]="badge.name"
+        class="badge-img"
+        [matTooltip]="'Click to see details'"
+        matTooltipPosition="above"
+      />
+    </ng-container>
+  </div>
+</div>
+</div>
+
+<div class="dashboard-row">
+  <div class="chart-col" style="margin-right: 0;">
+    <div class="dashboard-card">
+      <app-line-chart *ngIf="dashboard.eloProgressOverTime[0].series.length > 0; else noData"
+          [title]="'ELO Progress Over Time'"
+          [data]="dashboard.eloProgressOverTime"
+          [xAxisLabel]="'Date'"
+          [yAxisLabel]="'ELO Rating'">
+      </app-line-chart>
+    </div>
+  </div>
+  <div class="chart-col" style="margin-left: 0;">
+    <div class="dashboard-card" >
+      <app-grouped-bar-chart *ngIf="dashboard.scoreComparison[0].series.length > 0; else noData"
+          [title]="'Writing Performance Improvement'"
+          [data]="dashboard.scoreComparison"
+          [xAxisLabel]="'Date'"
+          [yAxisLabel]="'ELO Rating'">
+      </app-grouped-bar-chart>
+    </div>
+  </div>
+  </div>
+  
+
+<!-- <div class="dashboard-row">
+
+ <div class="chart-col" style="margin: 0;">
+    <div class="dashboard-card">
+      <app-radar-chart
+          [title]="'Writing Performance'"
+          [data]="dashboard.writingPerformance">
+      </app-radar-chart>
+    </div>
+  </div>
+  <div class="chart-col">
+    <div class="dashboard-card">
+      <app-grouped-bar-chart
+          [title]="'Questions by Category'"
+          [xAxisLabel]="'Category'"
+          [yAxisLabel]="'Question count'"
+          [data]="dashboard.questionTypesDistribution">
+      </app-grouped-bar-chart>
+    </div>
+  </div> 
+</div>  -->
+
+<div class="dashboard-row">
+    <div class="chart-col">
+      <div class="dashboard-card" >
+        <app-heat-map-calendar 
+          [title]="'Activity Calendar'"
+          [data]="dashboard.activityCalendar">
+        </app-heat-map-calendar>
+      </div>
+    </div>
+</div>
+
+
+<div class="dashboard-row" >
+    <app-questions-table 
+      [questions]="dashboard.responseHistory"
+      [displayedColumns]="displayedColumns">
+    </app-questions-table>
+</div>
+
+<ng-template #noData>
+  <div class="no-data-placeholder">
+    <mat-icon class="placeholder-icon" 
+              aria-hidden="true" 
+              fontIcon="insert_chart_outlined">
+    </mat-icon>
+
+    <p class="placeholder-text">
+      Nothing to display.<br>
+      Please start answering questions to see your progress here.
+    </p>
+
+    <button class="placeholder-cta"
+            mat-raised-button
+            color="primary"
+            [routerLink]="'/train'">
+      Start Practicing!
+    </button>
+  </div>
+</ng-template>

@@ -11,6 +11,8 @@ import { ResultsComponent } from './results/results.component';
 import { TrainComponent } from './train/train.component';
 import { adminGuard } from './auth/admin.guard';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { ProgressComponent } from './progress/progress.component';
+import { HeatMapCalendarComponent } from './charts/heat-map-calendar/heat-map-calendar.component';
 
 
 export const routes: Routes = [
@@ -24,6 +26,7 @@ export const routes: Routes = [
   { path: 'eval', component: EvalComponent, canActivate: [authGuard] },
   { path: 'results', component: ResultsComponent, canActivate: [authGuard] },
   { path: 'train', component: TrainComponent, canActivate: [authGuard] },
+  { path: 'progress', component: ProgressComponent, canActivate: [authGuard] },
   // Rutas de administración
   { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [adminGuard] }, // Cambia esto por el componente de tu dashboard
   { path: '**', redirectTo: '' }

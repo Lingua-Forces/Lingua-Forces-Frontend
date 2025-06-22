@@ -2,11 +2,14 @@
 
 .auth-header {
   width: 100%;
-  max-width: 1280px;
   display: flex;
   justify-content: space-between;
-  padding: 2rem;
   align-items: center;
+  padding: 2rem 3vw; // Usar vw hace el padding responsivo
+  
+  // Si quieres limitar el ancho máximo pero centrar el header
+  max-width: 1280px;
+  margin: 0 auto;
 
   &__brand {
     font-size: $semibold-header-1-font-size;

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-admin-header',
-  imports: [RouterLink],
+  imports: [RouterLink,CommonModule,RouterModule],
   templateUrl: './admin-header.component.html',
   styleUrl: './admin-header.component.scss'
 })
