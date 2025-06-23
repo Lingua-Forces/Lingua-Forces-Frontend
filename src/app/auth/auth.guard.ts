@@ -7,7 +7,11 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   // Verificar si el usuario está autenticado
-  if(authService.auth()){ return true; }
+  const auth = authService.auth();
+  // Verificar si el usuario está autenticado y es admin
+  if(auth && auth.user?.role === 'USER'){
+      return true;
+  }
 
   // Usuario no autenticado, redirigir al componente de inicio de sesión
   router.navigate(['login']);

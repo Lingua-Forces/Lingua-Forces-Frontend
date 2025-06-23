@@ -1,0 +1,35 @@
+<header class="admin-header">
+  <div class="admin-header__left">
+    <div class="admin-header__brand" [routerLink]="'/home'">LinguaForces</div>
+  </div>
+
+  <nav class="admin-header__nav">
+  <button
+      class="btn"
+      [routerLink]="'/admin-dashboard'"
+      routerLinkActive="btn--primary"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Análisis de Modelos
+    </button>
+
+    <button
+      class="btn"
+      [routerLink]="'/eval'"
+      routerLinkActive="btn--primary"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Simulación de Entrenamiento
+    </button>
+
+  </nav>
+
+  <div class="admin-header__right">
+    <img class="admin-header__avatar" src="assets/images/userProfilePicture.png" alt="Avatar" />
+    <button class="btn btn--danger desktop-logout" (click)="logout()">Logout</button>
+    <button class="admin-header__menu" (click)="toggleNav()">☰</button>
+  </div>
+
+  <aside class="admin-mobile-menu" *ngIf="navOpen">
+  <button (click)="logout()">Logout</button>
+    <!-- otros links -->
+  </aside>
+</header>

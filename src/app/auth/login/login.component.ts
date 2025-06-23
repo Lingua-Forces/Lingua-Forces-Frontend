@@ -9,6 +9,8 @@ import { NgIf } from '@angular/common';
 import { FooterComponent } from '../../shared/footer/footer.component';
 import { AuthHeaderComponent } from '../../shared/auth-header/auth-header.component';
 import { UtilsService } from '../../shared/utils/utils.service';
+import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -17,11 +19,13 @@ import { UtilsService } from '../../shared/utils/utils.service';
   styleUrls: ['./../auth.module.scss'],
 })
 export class LoginComponent implements OnInit {
+  private readonly apiUrl = `${environment.apiUrl}/stats/placement/status`;
   form: FormGroup;
   showPassword = false;
-
+  canTrain: boolean = false;
   constructor(
     private authService: AuthService,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private router: Router,
     private utils: UtilsService
@@ -32,23 +36,47 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    if (this.authService.auth()) {
-      this.router.navigate(['/eval']);
+async ngOnInit(): Promise<void> {
+  const authData = this.authService.auth();
+  if (authData) {
+    if (authData.user?.role === 'ADMIN') {
+      this.router.navigate(['/admin-dashboard']);
+    } else {
+      await this.checkPlacementStatus(); // Espera a que termine
+      if (this.canTrain) {
+        this.router.navigate(['/progress']);
+      }
+      else {
+        this.router.navigate(['/eval']);
+      }
     }
   }
+}
 
-  login(): void {
-    if (this.form.invalid) {
-      return;
-    }
-    const credentials: LoginRequest = this.form.value as LoginRequest;
 
-    this.authService.login(credentials).subscribe({
-      next: (response) => {       
-        this.utils.showSnackBar('Inicio de sesión exitoso');
-        this.router.navigate(['/eval']); // Redirigir a la página de inicio
-      },
+async login(): Promise<void> {
+  if (this.form.invalid) {
+    return;
+  }
+  const credentials: LoginRequest = this.form.value as LoginRequest;
+
+  this.authService.login(credentials).subscribe({
+    next: async (response) => {       
+      this.utils.showSnackBar('Inicio de sesión exitoso');
+      if (response.role === 'ADMIN') {
+        this.router.navigate(['/admin-dashboard']);
+      }
+      else {
+        await this.checkPlacementStatus(); // Espera a que termine
+        console.log('Estado del placement:', this.canTrain);
+        if (this.canTrain) {
+          this.router.navigate(['/progress']);
+        }
+        else {
+          this.router.navigate(['/eval']);
+        }
+      }
+    },
       
       error: (err) => {
         console.error('Error en el inicio de sesión:', err.message);
@@ -68,6 +96,22 @@ export class LoginComponent implements OnInit {
     });
   }
 
+checkPlacementStatus(): Promise<boolean> {
+  return new Promise((resolve) => {
+    this.http.get<boolean>(this.apiUrl)
+      .subscribe({
+        next: (res) => {
+          this.canTrain = res;
+          resolve(res);
+        },
+        error: (err) => {
+          console.error('Error al obtener estado del placement', err);
+          this.canTrain = false;
+          resolve(false);
+        }
+      });
+  });
+}
   controlHasError(control: string, error: string) {
     return this.form.controls[control].hasError(error);
   }

@@ -1,108 +1,180 @@
-import { AfterViewInit, Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import CalHeatmap from 'cal-heatmap';
-import { MatCardModule } from '@angular/material/card';
+import { Component, OnInit } from '@angular/core';
 import { MainHeaderComponent } from '../shared/main-header/main-header.component';
-import { Badge } from '../models/badge';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
+import { ProgressService } from './progress.service';
+import { QuestionsTableComponent } from '../charts/questions-table/questions-table.component';
+import { AdvPieChartComponent } from "../charts/adv-pie-chart/adv-pie-chart.component";
+import { ProgressDashboardResponseDTO } from '../models/model-charts';
+import { RadarChartComponent } from '../charts/radar-chart/radar-chart.component';
+import { GroupedBarChartComponent } from '../charts/grouped-bar-chart/grouped-bar-chart.component';
+import { LineChartComponent } from '../charts/line-chart/line-chart.component';
+import { MatIcon } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { HeatMapCalendarComponent } from '../charts/heat-map-calendar/heat-map-calendar.component';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-progress',
-  standalone: true,
+  imports: [MainHeaderComponent, QuestionsTableComponent, AdvPieChartComponent,
+            GroupedBarChartComponent,LineChartComponent,RouterModule,RouterLink,
+            MatIcon,CommonModule,MatTooltipModule,HeatMapCalendarComponent],
   templateUrl: './progress.component.html',
-  styleUrls: ['./progress.component.scss'],
-  imports: [MainHeaderComponent, CommonModule, MatCardModule, MatDialogModule],
+  styleUrl: './progress.component.scss'
 })
-export class ProgressComponent implements AfterViewInit {
-  @ViewChild('badgeDialog') badgeDialog!: TemplateRef<any>;
-
-  @ViewChild('heatmapContainer', { static: true }) heatmapRef!: ElementRef;
-  
-  badges = [
-    { name: 'Nivel A1', img: 'assets/images/badges/CEFR/A1.svg', description: "¡Llegaste al nivel A1!", nivel: 1 },
-    this.createBadge('Fire', 1),
-    this.createBadge('Bulb', 2),
-    this.createBadge('Precision', 0),
+export class ProgressComponent implements OnInit {
+  displayedColumns: string[] = [];
+  dashboard!: ProgressDashboardResponseDTO;
+  allBadges = [
+    { name: 'Completionist', img: 'assets/badges/completionist.png',description: 'Complete all tasks in a category' },
+    { name: 'Streak Master', img: 'assets/badges/streak.png',description: 'Complete all tasks in a category' }, 
+    { name: 'Grammar Pro', img: 'assets/badges/grammar.png',description: 'Complete all tasks in a category' },
   ];
-  constructor(private dialog: MatDialog) {}
-  
-  ngAfterViewInit(): void {
-    const today = new Date();
-    const start = new Date(today.getFullYear(), 0, 1); // enero
-    const data = [];
 
-    for (let d = new Date(start); d <= today; d.setDate(d.getDate() + 1)) {
-      data.push({
-        date: d.toISOString().split('T')[0],
-        value: Math.floor(Math.random() * 5)
-      });
+  constructor(
+      private progressService: ProgressService,
+    ) {}
+  
+    ngOnInit(): void {
+      this.loadDashboard();
     }
 
-    const cal = new CalHeatmap();
-    cal.paint({
-      itemSelector: this.heatmapRef.nativeElement,
-      range: 12,
-      date: { start: start },
-      domain: { type: 'month' },
-      subDomain: { type: 'day' },
-      data: {
-        type: 'json',
-        source: data,
-        x: 'date',
-        y: 'value'
+    private loadDashboard() {
+    this.progressService.getDashboardData().subscribe({
+      next: (response) => {
+        this.dashboard = response;
+        this.setDisplayedColumns();
+        console.log('Dashboard loaded successfully:', this.dashboard);
       },
-      scale: {
-        color: {
-          type: 'linear',
-          scheme: 'greens',
-          domain: [0, 4]
-        }
-      },
-      tooltip: {
-        enabled: true,
-        text: (date: Date, value: number | null) =>
-          `${date.toDateString()}: ${value ?? 0} ejercicios`
+      error: (error) => {
+        console.error('Error loading dashboard:', error);
       }
     });
   }
-  createBadge(name: 'Fire' | 'Bulb' | 'Precision', nivel: number): Badge {
-    const descriptions = {
-      Fire: [
-        'Tu viaje acaba de comenzar',
-        'Buen ritmo de práctica',
-        '¡Estás en llamas!',
-        '🔥 Dominando los ejercicios'
+
+    private loadDashboard2() {
+    //hacemos un mock
+    this.dashboard = {
+      kpiUserLevel: { label: 'Current level', value: 'B2' },
+      kpiUserElo: { label: 'Current ELO', value: '1300' },
+      kpiUserMaxStreak: { label: 'Highest Streak', value: '5 days' },
+      kpiUserCurrentStreak: { label: 'Current Streak', value: '3 days' },
+      responseHistory: [
+        {
+          answeredAt: '2025-06-01T10:30:00Z',
+          questionId: 'q101',
+          prompt: 'Translate the following sentence: "She is reading a book."',
+          skill: 'translation',
+          questionType: 'open-ended',
+          questionElo: '1320',
+          userAnswer: 'Ella está leyendo un libro.',
+          correct: 'true'
+        },
+        {
+          answeredAt: '2025-06-02T14:15:00Z',
+          questionId: 'q102',
+          prompt: 'Choose the correct past form of the verb "go".',
+          skill: 'grammar',
+          questionType: 'multiple-choice',
+          questionElo: '1280',
+          userAnswer: 'went',
+          correct: 'true'
+        },
+        {
+          answeredAt: '2025-06-03T09:45:00Z',
+          questionId: 'q103',
+          prompt: 'Fill in the blank: "They ___ to the cinema yesterday."',
+          skill: 'grammar',
+          questionType: 'fill-in-the-blank',
+          questionElo: '1350',
+          userAnswer: 'go',
+          correct: 'false'
+        }
       ],
-      Bulb: [
-        'Empieza a resolver problemas',
-        '¡Resolviste 30 problemas!',
-        'Eres una mente brillante. Resolviste 180 problemas',
-        '🧠 Genio total. Resolviste 365 problemas'
+      correctAnswersProportion: [
+        { name: 'Correctas', value: 18 },
+        { name: 'Incorrectas', value: 7 }
       ],
-      Precision: [
-        'Comenzando con precisión',
-        'Buen porcentaje de aciertos',
-        'Precisión destacable',
-        '🎯 ¡Casi perfecto!'
+      eloProgressOverTime: [{
+        name: "ELO",
+        series: [
+          { name: "16-06-2025", value: 10 },
+          { name: "17-06-2025", value: 5 },
+          { name: "18-06-2025", value: 3 },
+          { name: "19-06-2025", value: 10 },
+          { name: "20-06-2025", value: 5 },
+          { name: "21-06-2025", value: 3 },
+          { name: "22-06-2025", value: 5 },
+          { name: "23-06-2025", value: 3 },
+          { name: "24-06-2025", value: 5 },
+          { name: "25-06-2025", value: 3 },
+          { name: "26-06-2025", value: 5 },
+          { name: "27-06-2025", value: 3 }
+        ]
+      }
+      ],
+      scoreComparison: [
+        { name: 'a',
+          series: [
+            { name: 'first test', value: 1 },
+            { name: 'last test', value: 5 },
+          ]
+        },
+        { name: 'b',
+          series: [
+            { name: 'first test', value: 1 },
+            { name: 'last test', value: 5 },
+          ]
+        },
+        { name: 'c',
+          series: [
+            { name: 'first test', value: 1 },
+            { name: 'last test', value: 5 },
+          ]
+        },
+        { name: 'd',
+          series: [
+            { name: 'first test', value: 1 },
+            { name: 'last test', value: 5 },
+          ]
+        },
+        { name: 'e',
+          series: [
+            { name: 'first test', value: 1 },
+            { name: 'last test', value: 5 },
+          ]
+        },
+        { name: 'f',
+          series: [
+            { name: 'first test', value: 1 },
+            { name: 'last test', value: 5 },
+          ]
+        },
+      ],
+      activityCalendar: [
+        { name: '2025-06-01', value: 2 },
+        { name: '2025-06-02', value: 3 },
+        { name: '2025-06-03', value: 1 },
+        { name: '2025-06-04', value: 4 },
+        { name: '2025-06-05', value: 2 }
       ]
-    };
-
-    const maxNivel = descriptions[name].length - 1;
-    const safeNivel = Math.min(nivel, maxNivel);
-
-    return {
-      name,
-      nivel: safeNivel,
-      description: descriptions[name][safeNivel],
-      img: `assets/images/badges/${name}${safeNivel}.svg`
+      
     };
   }
+  
 
-  openBadgeModal(badge: Badge): void {
-    this.dialog.open(this.badgeDialog, {
-      data: badge
-    });
+  setDisplayedColumns() {
+    this.displayedColumns = [
+      'answeredAt', 'prompt', 'questionType', 'skill', 'questionElo','userAnswer','correct'
+    ];
   }
+
+  getVisibleBadges() {
+  // Por ejemplo, máximo 3 en desktop
+    return this.allBadges.slice(0, 3);
+  } 
+
+  openBadgesModal() {}
+
 
 }
+

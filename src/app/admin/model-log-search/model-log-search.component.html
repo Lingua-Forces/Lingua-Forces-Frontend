@@ -1,0 +1,48 @@
+<div class="search-bar-container">
+  <form [formGroup]="form" class="search-bar-form" (ngSubmit)="onSearch()">
+    <div class="search-bar-item">
+      <label class="search-label">
+        <mat-icon>memory</mat-icon>
+        Tipo de modelo
+      </label>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-select formControlName="modelType"  placeholder="Selecciona un tipo">
+          <mat-option *ngFor="let type of modelTypes" [value]="type.value">{{ type.label }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="search-bar-item">
+      <label class="search-label">
+        <mat-icon>person</mat-icon>
+        Usuario
+      </label>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-select formControlName="userId" placeholder="Selecciona un usuario">
+          <mat-option value="all">Todos</mat-option>
+          <mat-option *ngFor="let id of userIds" [value]="id">{{ id }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="search-bar-item" formGroupName="dateRange">
+      <label class="search-label">
+        <mat-icon>calendar_today</mat-icon>
+        Rango de fechas
+      </label>
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Desde">
+          <input matEndDate   formControlName="end"   placeholder="Hasta">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="search-btn" [disabled]="form.invalid">
+      <mat-icon>search</mat-icon>
+      Buscar
+    </button>
+  </form>
+</div>

@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { MainHeaderComponent } from '../shared/main-header/main-header.component';
-import { TrainService } from './train.service'; // lo debes crear
-import { Question } from '../models/question';
+import { TrainService } from './train.service';
+import { Question, RlModelLog } from '../models/question';
 import { UserAnswer } from '../models/user-answer';
 import { Option } from '../models/option';
 import { TrainingResponse } from '../models/training-response';
@@ -45,6 +45,7 @@ export class TrainComponent implements OnInit {
   fetchQuestion(): void {
     this.trainService.getQuestion().subscribe({
       next: (question: Question) => {
+        console.log('Pregunta recibida:', question);
         this.currentQuestion = question;
         console.log('Pregunta cargada:', question);
       },
@@ -58,17 +59,20 @@ export class TrainComponent implements OnInit {
     this.hasSubmitted = false;
   }
   submitAnswer(): void {
-    if (!this.selectedKey || !this.currentQuestion) return;
+    if (!this.selectedKey || !this.currentQuestion|| !this.currentQuestion.rlModelLog) return;
 
     this.trainService.submitAnswer({
       id: this.currentQuestion.id,
-      key: this.selectedKey
+      key: this.selectedKey,
+      rlModelLog: this.currentQuestion.rlModelLog 
     }).subscribe({
       next: (response) => {
         this.trainingResponse = response;
         this.userElo = response.currentElo;
         this.userStreak = Math.max(0, response.currentStreak);
         this.openResultModal();
+        this.selectedKey = '';
+        this.selectedOption = '';
       },
       error: (err) => console.error(err)
     });

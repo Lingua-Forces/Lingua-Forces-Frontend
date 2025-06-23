@@ -1,0 +1,83 @@
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 2rem; /* Más separación del navbar */
+}
+
+.search-bar-form {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  padding: 1rem 2.5rem 0.5rem 2.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: flex-end;
+  width: 80%;
+  max-width: 1200px;
+  min-width: 320px;
+  margin: 0 auto; /* Esto ayuda a centrar si el padre no lo hace */
+  justify-content: center; 
+}
+
+.search-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.search-label {
+  min-width: 120px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: #333;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.search-field {
+  min-width: 275px
+}
+
+.search-btn {
+  height: 40px;
+  align-self: center;
+}
+
+@media (max-width: 1200px) {
+  .search-bar-form {
+    gap: 1rem;
+  }
+  .search-field {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .search-bar-form {
+    flex-direction: column;
+    align-items: stretch;
+    min-width: unset;
+    width: 100%;
+    padding: 1rem;
+    gap: 1.2rem;
+  }
+  .search-bar-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-label {
+    margin-bottom: 0.5rem;
+    min-width: unset;
+  }
+  .search-field {
+    min-width: unset;
+    width: 100%;
+  }
+  .search-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}

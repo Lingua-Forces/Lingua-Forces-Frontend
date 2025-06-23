@@ -1,0 +1,66 @@
+.que-table-col {
+  width: 100%;
+     // 48px a los lados y arriba, sin margen abajo
+  padding: 28px 18px 18px 18px;     // Más padding para sensación de "card"
+  background: #fff;                 // Fondo blanco
+  border-radius: 20px;              // Bordes bien curvos
+  box-shadow: 0 6px 32px 0 rgba(40, 80, 120, 0.11), 0 1.5px 6px 0 rgba(80,120,140,0.12);
+  overflow-x: auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.que-table-col h3 {
+  margin: 0 0 22px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #22264d;
+  letter-spacing: -1px;
+}
+
+// La tabla ocupa todo el ancho dentro del card
+.que-table-col table {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  background: transparent;
+}
+
+// Mejora la cabecera y las filas para que luzca como Material moderno
+.que-table-col th.mat-header-cell {
+  background: #f7f9fb;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #233150;
+  border: none;
+  padding: 14px 18px;
+}
+
+.que-table-col td.mat-cell {
+  font-size: 1rem;
+  padding: 12px 18px;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.que-table-col tr.mat-row:last-child td {
+  border-bottom: none;
+}
+
+// Alterna color de filas para mejor legibilidad
+.que-table-col tr.mat-row:nth-child(even) td {
+  background: #fcfcff;
+}
+
+// Opcional: efecto hover suave
+.que-table-col tr.mat-row:hover td {
+  background: #f1f6ff;
+  transition: background 0.2s;
+}
+
+// Personaliza el paginador
+.mat-paginator {
+  background: transparent !important;
+  border: none;
+  margin-top: 10px;
+}

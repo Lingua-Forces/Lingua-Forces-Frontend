@@ -33,7 +33,6 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles/styles.scss",
               "./node_modules/cal-heatmap/dist/cal-heatmap.css"
-
             ],
             "scripts": [],
             "stylePreprocessorOptions": {
@@ -95,6 +94,7 @@
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles/styles.scss"
+               
             ],
             "scripts": []
           }

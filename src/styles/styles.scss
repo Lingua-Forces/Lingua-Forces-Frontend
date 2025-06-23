@@ -6,7 +6,6 @@
 @use 'components/button';
 @import "cal-heatmap/cal-heatmap.css";
 
-
 /* Reset básico */
 * {
   margin: 0;
@@ -43,3 +42,13 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.advanced-pie-legend .legend-items-container .legend-items .legend-item .item-value {
+    font-size: 24px !important;
+    margin-top: 0 !important;
+    margin-left: 11px !important;
+}
+.advanced-pie-legend .total-label {
+    font-size: 24px;
+    margin-bottom: 10px !important;
+}

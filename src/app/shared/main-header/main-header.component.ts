@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-main-header',
-  imports: [RouterLink],
+  imports: [RouterLink,RouterModule],
   templateUrl: './main-header.component.html',
-  styleUrl: './main-header.component.scss'
+  styleUrl: './main-header.component.scss',
+  standalone: true,
 })
 export class MainHeaderComponent implements OnInit {
   private readonly apiUrl = `${environment.apiUrl}/stats/placement/status`;
