@@ -42,7 +42,7 @@ export class HeatMapCalendarComponent implements AfterViewInit {
           color: {
             type: 'linear',
             scheme: 'greens',
-            domain: [0, 4]
+            domain: [0, 10]
           }
         },
       },

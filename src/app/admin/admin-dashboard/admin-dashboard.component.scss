@@ -86,3 +86,32 @@
 .line-chart-col .dashboard-card {
   height: 100%;
 }
+
+.no-data-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+
+  /* Borde punteado y fondo suave */
+  padding: 1rem;
+  border: 2px dashed rgba(0, 0, 0, 0.1);
+  background-color: #f5faff;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.placeholder-icon {
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.placeholder-text {
+  /* Texto en cursiva y color secundario */
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
+}

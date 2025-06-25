@@ -81,13 +81,13 @@ async login(): Promise<void> {
       error: (err) => {
         console.error('Error en el inicio de sesión:', err.message);
         if (err.status === 401) {
-          this.utils.showSnackBar('El correo o la contraseña son incorrectos');
+          this.utils.showSnackBar('El correo es incorrecto o no está registrado');
         }
         else if (err.status === 403) {
-          this.utils.showSnackBar('El usuario no está autorizado');
+          this.utils.showSnackBar('El usuario no está verificado');
         }
         else if (err.status === 500) {
-          this.utils.showSnackBar('El usuario no está verificado');
+          this.utils.showSnackBar('La contraseña es incorrecta');
         }
         else {
           this.utils.showSnackBar('Error en el inicio de sesión '+ err.status);

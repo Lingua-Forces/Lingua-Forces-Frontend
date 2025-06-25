@@ -71,8 +71,7 @@ export class TrainComponent implements OnInit {
         this.userElo = response.currentElo;
         this.userStreak = Math.max(0, response.currentStreak);
         this.openResultModal();
-        this.selectedKey = '';
-        this.selectedOption = '';
+
       },
       error: (err) => console.error(err)
     });
@@ -87,6 +86,8 @@ export class TrainComponent implements OnInit {
   closeResultModal(): void {
     if (this.dialogRef) {
       this.dialogRef.close();
+      this.selectedKey = '';
+      this.selectedOption = '';
     }
   }
 

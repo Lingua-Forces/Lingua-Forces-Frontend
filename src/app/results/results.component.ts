@@ -4,11 +4,15 @@ import { MainHeaderComponent } from '../shared/main-header/main-header.component
 import { Router } from '@angular/router';
 import { EvaluationResult } from '../models/evaluation-result';
 import { EvalService } from '../eval/eval.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+
+
 
 @Component({
   selector: 'app-results',
   standalone: true,
-  imports: [CommonModule, MainHeaderComponent],
+  imports: [CommonModule, MainHeaderComponent,MatProgressSpinnerModule],
   templateUrl: './results.component.html',
   styleUrl: './results.component.scss'
 })

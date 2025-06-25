@@ -1,6 +1,6 @@
 <app-main-header />
 
-<div class="dashboard-top-row">
+<div class="dashboard-top-row" *ngIf="hasDashboardData()">
   <!-- Columna 1: Nivel y ELO -->
   <div class="kpi-col">
     <div class="kpi-card kpi-level">
@@ -53,7 +53,6 @@
   <div class="badges-list">
     <ng-container *ngFor="let badge of getVisibleBadges()">
       <img
-        [src]="badge.img"
         [alt]="badge.name"
         class="badge-img"
         [matTooltip]="'Click to see details'"
@@ -66,8 +65,8 @@
 
 <div class="dashboard-row">
   <div class="chart-col" style="margin-right: 0;">
-    <div class="dashboard-card">
-      <app-line-chart *ngIf="dashboard.eloProgressOverTime[0].series.length > 0; else noData"
+    <div class="dashboard-card" >
+      <app-line-chart *ngIf="hasEloProgressData(); else noData"
           [title]="'ELO Progress Over Time'"
           [data]="dashboard.eloProgressOverTime"
           [xAxisLabel]="'Date'"
@@ -77,7 +76,7 @@
   </div>
   <div class="chart-col" style="margin-left: 0;">
     <div class="dashboard-card" >
-      <app-grouped-bar-chart *ngIf="dashboard.scoreComparison[0].series.length > 0; else noData"
+      <app-grouped-bar-chart *ngIf="hasScoreComparisonData(); else noData"
           [title]="'Writing Performance Improvement'"
           [data]="dashboard.scoreComparison"
           [xAxisLabel]="'Date'"
@@ -86,34 +85,12 @@
     </div>
   </div>
   </div>
-  
 
-<!-- <div class="dashboard-row">
-
- <div class="chart-col" style="margin: 0;">
-    <div class="dashboard-card">
-      <app-radar-chart
-          [title]="'Writing Performance'"
-          [data]="dashboard.writingPerformance">
-      </app-radar-chart>
-    </div>
-  </div>
-  <div class="chart-col">
-    <div class="dashboard-card">
-      <app-grouped-bar-chart
-          [title]="'Questions by Category'"
-          [xAxisLabel]="'Category'"
-          [yAxisLabel]="'Question count'"
-          [data]="dashboard.questionTypesDistribution">
-      </app-grouped-bar-chart>
-    </div>
-  </div> 
-</div>  -->
 
 <div class="dashboard-row">
     <div class="chart-col">
       <div class="dashboard-card" >
-        <app-heat-map-calendar 
+        <app-heat-map-calendar *ngIf="hasActivityCalendar(); else noData"
           [title]="'Activity Calendar'"
           [data]="dashboard.activityCalendar">
         </app-heat-map-calendar>

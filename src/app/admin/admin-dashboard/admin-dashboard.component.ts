@@ -34,6 +34,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 export class AdminDashboardComponent implements OnInit {
   displayedColumns: string[] = [];
   userIds: string[] = [];
+  usernames: string[] = [];
   dashboard!: AdminDashboardResponseDTO;
   hasSearched = false;  
   selectedModelType: string | null = null;
@@ -57,6 +58,7 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.getUsers().subscribe({
       next: (response) => {
         this.userIds = response.userIds || [];
+        this.usernames = response.usernames || [];
       },
       error: (error) => {
         console.error('Error fetching user IDs:', error);
@@ -280,6 +282,20 @@ export class AdminDashboardComponent implements OnInit {
     ];
   }
 }
+
+get hasScoreDistribution(): boolean {
+  return !!this.dashboard.scoreDistributionByCriterion &&
+    !!this.dashboard.scoreDistributionByCriterion[0] &&
+    !!this.dashboard.scoreDistributionByCriterion[0].series &&
+    this.dashboard.scoreDistributionByCriterion[0].series.length > 0;
+}
+
+get hasEloProgress(): boolean {
+  return !!this.dashboard.eloProgressOverTime &&
+    !!this.dashboard.eloProgressOverTime[0] &&
+    !!this.dashboard.eloProgressOverTime[0].series &&
+    this.dashboard.eloProgressOverTime[0].series.length > 0;
+  }
 
 
 }

@@ -170,7 +170,7 @@
 
 /* Aplica SOLO a la carta del pie chart */
 .adv-pie-card {
-  padding: 12px 0 0px 0 !important;
+  padding: 12px !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -185,9 +185,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  /* Ajusta la altura según el espacio disponible */
-  height: 200px;
+  height: 100%;
 
   /* Borde punteado y fondo suave */
   padding: 1rem;

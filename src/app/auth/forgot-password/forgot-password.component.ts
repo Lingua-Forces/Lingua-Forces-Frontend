@@ -44,7 +44,7 @@ export class ForgotPasswordComponent{
       },
       error: (error) => {
         console.error('Error al enviar el correo de verificación:', error);
-        this.utils.showSnackBar('Error al enviar el correo de verificación');
+        this.utils.showSnackBar('El correo electrónico no está registrado');
       }
     })
   }

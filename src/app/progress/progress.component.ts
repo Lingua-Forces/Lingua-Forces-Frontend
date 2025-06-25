@@ -3,7 +3,7 @@ import { MainHeaderComponent } from '../shared/main-header/main-header.component
 import { ProgressService } from './progress.service';
 import { QuestionsTableComponent } from '../charts/questions-table/questions-table.component';
 import { AdvPieChartComponent } from "../charts/adv-pie-chart/adv-pie-chart.component";
-import { ProgressDashboardResponseDTO } from '../models/model-charts';
+import { ProgressDashboardResponseDTO, UserResponseDTO } from '../models/model-charts';
 import { RadarChartComponent } from '../charts/radar-chart/radar-chart.component';
 import { GroupedBarChartComponent } from '../charts/grouped-bar-chart/grouped-bar-chart.component';
 import { LineChartComponent } from '../charts/line-chart/line-chart.component';
@@ -29,6 +29,7 @@ export class ProgressComponent implements OnInit {
     { name: 'Streak Master', img: 'assets/badges/streak.png',description: 'Complete all tasks in a category' }, 
     { name: 'Grammar Pro', img: 'assets/badges/grammar.png',description: 'Complete all tasks in a category' },
   ];
+  responseHistory: UserResponseDTO[] = [];
 
   constructor(
       private progressService: ProgressService,
@@ -160,7 +161,6 @@ export class ProgressComponent implements OnInit {
       
     };
   }
-  
 
   setDisplayedColumns() {
     this.displayedColumns = [
@@ -175,6 +175,36 @@ export class ProgressComponent implements OnInit {
 
   openBadgesModal() {}
 
+  hasDashboardData(): boolean {
+  return !!this.dashboard && !!this.dashboard.kpiUserLevel;
+}
+
+hasCorrectAnswersData(): boolean {
+  return !!this.dashboard?.correctAnswersProportion &&
+         this.dashboard.correctAnswersProportion.length >= 2 &&
+         this.dashboard.correctAnswersProportion[0]?.value > 0 &&
+         this.dashboard.correctAnswersProportion[1]?.value > 0;
+}
+
+hasEloProgressData(): boolean {
+  return !!this.dashboard?.eloProgressOverTime &&
+         this.dashboard.eloProgressOverTime.length > 0 &&
+         this.dashboard.eloProgressOverTime[0].series?.length > 0;
+}
+
+hasScoreComparisonData(): boolean {
+  return !!this.dashboard?.scoreComparison &&
+         this.dashboard.scoreComparison.length > 0 &&
+         this.dashboard.scoreComparison[0].series?.length > 0;
+}
+
+hasActivityCalendar(): boolean {
+  return !!this.dashboard?.activityCalendar && this.dashboard.activityCalendar.length > 0;
+}
+
+hasResponseHistory(): boolean {
+  return !!this.dashboard?.responseHistory && this.dashboard.responseHistory.length > 0;
+}
 
 }
 

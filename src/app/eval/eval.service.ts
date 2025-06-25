@@ -6,22 +6,40 @@ import { Question } from '../models/question';
 import { EvalResponse } from '../models/eval-response';
 import { EvaluationResult } from '../models/evaluation-result';
 import { environment } from '../../environments/environment';
+import { ReevaluationEnabled } from '../models/reevaluation-enabled';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvalService {
-  private readonly baseUrl = `${environment.apiUrl}/eval/placement`;
+  private readonly baseUrl = `${environment.apiUrl}/eval/`;
   private latestResult: EvaluationResult | null = null;
 
   constructor(private http: HttpClient) {}
 
   getQuestions(): Observable<Question[]> {
-    return this.http.get<Question[]>(`${this.baseUrl}/getQuestions`);
+    return this.http.get<Question[]>(`${this.baseUrl}placement/getQuestions`);
   }
 
   submitResponses(answers: EvalResponse[]): Observable<EvaluationResult> {
-    return this.http.post<EvaluationResult>(`${this.baseUrl}/evaluate`, answers).pipe(
+    return this.http.post<EvaluationResult>(`${this.baseUrl}placement/evaluate`, answers).pipe(
+      tap(result => this.latestResult = result)
+    );
+  }
+  canReevaluate(): Observable<ReevaluationEnabled> {
+    return this.http.get<ReevaluationEnabled>(`${this.baseUrl}reevaluation/canReevaluate`)
+  }
+
+  hasCompletedPlacement(): Observable<{ completed: boolean }> {
+    return this.http.get<{ completed: boolean }>(`${environment.apiUrl}/stats/placement/status`);
+  }
+
+  getReevaluationQuestions(): Observable<Question[]> {
+    return this.http.get<Question[]>(`${this.baseUrl}reevaluation/getQuestions`);
+  }
+
+  reevaluate(answers: EvalResponse[]): Observable<EvaluationResult> {
+    return this.http.post<EvaluationResult>(`${this.baseUrl}reevaluation/evaluate`, answers).pipe(
       tap(result => this.latestResult = result)
     );
   }
@@ -33,30 +51,5 @@ export class EvalService {
   cacheResult(result: EvaluationResult): void {
     this.latestResult = result;
   }
-  getQuestions2(): Observable<Question[]> {
-    const mockQuestions: Question[] = [
-      {
-        id: '1',
-        prompt: 'What are your goals for learning English?',
-        type: 'free_text',
-        skill: 'writing',
-        level: 'A2',
-        elo: 1000,
-        options: [],
-        readingText: '',
-      },
-      {
-        id: '2',
-        prompt: 'Describe your daily routine in English.',
-        type: 'free_text',
-        skill: 'writing',
-        level: 'A2',
-        elo: 1000,
-        options: [],
-        readingText: '',
-      }
-    ];
 
-    return of(mockQuestions).pipe(delay(500));
-  }
 }

@@ -68,3 +68,17 @@
 .evaluation__button {
   width: 100%;
 }
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  min-height: 54px;
+  color: #246ad4;
+  font-weight: 500;
+  font-size: 1.08rem;
+}
+
+

@@ -5,13 +5,11 @@
 
   <nav class="main-header__nav" [class.open]="navOpen">
   <button
-    class="btn"
-    [routerLink]="'/eval'"
-    routerLinkActive="btn--primary"
-    [routerLinkActiveOptions]="{ exact: true }"
-    [disabled]="canTrain">
-    Evaluation
-  </button>
+      class="btn"
+      (click)="goToEval()"  
+      [ngClass]="{'btn--primary': isOnEvalRoute() }">
+      Evaluation
+    </button>
 
   <button
     class="btn"
@@ -26,7 +24,8 @@
     class="btn"
     [routerLink]="'/progress'"
     routerLinkActive="btn--primary"
-    [routerLinkActiveOptions]="{ exact: true }">
+    [routerLinkActiveOptions]="{ exact: true }"
+    [disabled]="!canTrain">
     Progress
   </button>
 
