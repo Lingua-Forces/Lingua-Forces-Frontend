@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { EvaluationResult } from '../models/evaluation-result';
 import { environment } from '../../environments/environment';
 import { ProgressDashboardResponseDTO } from '../models/model-charts';
+import { Badge } from '../models/badge';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,8 @@ export class ProgressService {
     return this.http.get<ProgressDashboardResponseDTO>(`${this.baseUrl}/dashboard`);
   }
 
-
+  getBadges(): Observable<Badge[]> {
+    return this.http.get<Badge[]>(`${this.baseUrl}/badges`);
+  }
+  
 }

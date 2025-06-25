@@ -1,6 +1,8 @@
 export interface Badge {
-  name: string;
-  nivel: number;
-  description: string;
-  img: string;
+  badgeId: number;
+  badgeName: string;
+  badgeType: string;
+  badgeDescription: string;
+  badgeImageUrl: string;
+  badgeLevel: number;
 }
