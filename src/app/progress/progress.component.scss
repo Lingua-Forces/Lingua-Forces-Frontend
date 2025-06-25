@@ -222,3 +222,11 @@
     background-color: #115293; /* primary Material Blue 900 */
   }
 }
+
+.badge-dialog-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
