@@ -35,8 +35,8 @@
     </div>
   </div>
 
-  <div class="dashboard-card adv-pie-card" *ngIf="hasCorrectAnswersData(); else noData">
-    <app-adv-pie-chart
+  <div class="dashboard-card adv-pie-card" >
+    <app-adv-pie-chart *ngIf="hasCorrectAnswersData(); else noData"
       [title]="'Correct vs Incorrect Answers'"
       [data]="dashboard.correctAnswersProportion"
       [view]="[300,160]">
@@ -51,7 +51,7 @@
       </button>
     </div>
     <div class="badges-list">
-      <div *ngFor="let badge of userBadges">
+      <div *ngFor="let badge of  getVisibleBadges()">
         <img
           [src]="badge.badgeImageUrl"
           [alt]="badge.badgeName"
@@ -64,7 +64,7 @@
   </div>
 </div>
 
-<div class="dashboard-row" *ngIf="hasEloProgressData(); else noData">
+<div class="dashboard-row">
   <div class="chart-col" style="margin-right: 0;">
     <div class="dashboard-card" >
       <app-line-chart *ngIf="hasEloProgressData(); else noData"

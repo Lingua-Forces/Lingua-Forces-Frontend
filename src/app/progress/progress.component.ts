@@ -85,11 +85,52 @@ export class ProgressComponent implements OnInit {
 
   getVisibleBadges() {
   // Por ejemplo, máximo 3 en desktop
-    return this.allBadges.slice(0, 3);
+    return this.userBadges.slice(0, 3);
   } 
 
-  openBadgesModal() {}
+   hasDashboardData(): boolean {
+    return !!this.dashboard && !!this.dashboard.kpiUserLevel;
+  }
+
+  hasBadges(): boolean {
+    return this.userBadges && this.userBadges.length > 0;
+  }
+
+  hasCorrectAnswersData(): boolean {
+    return !!this.dashboard?.correctAnswersProportion &&
+      this.dashboard.correctAnswersProportion.length >= 2 &&
+      this.dashboard.correctAnswersProportion[0]?.value > 0 &&
+      this.dashboard.correctAnswersProportion[1]?.value > 0;
+  }
+
+  hasEloProgressData(): boolean {
+    return !!this.dashboard?.eloProgressOverTime &&
+      this.dashboard.eloProgressOverTime.length > 0 &&
+      this.dashboard.eloProgressOverTime[0].series?.length > 0;
+  }
+
+  hasScoreComparisonData(): boolean {
+    return !!this.dashboard?.scoreComparison &&
+      this.dashboard.scoreComparison.length > 0 &&
+      this.dashboard.scoreComparison[0].series?.length > 0;
+  }
+
+  hasActivityCalendar(): boolean {
+    return !!this.dashboard?.activityCalendar && this.dashboard.activityCalendar.length > 0;
+  }
+
+  hasResponseHistory(): boolean {
+    return !!this.dashboard?.responseHistory && this.dashboard.responseHistory.length > 0;
+  }
+
+  openBadgesModal(): void {
+    this.dialog.open(this.badgeModalTemplate, {
+      width: '600px',
+      data: this.userBadges
+    });
+  }
 
 
 }
+
 
