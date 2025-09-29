@@ -9,4 +9,20 @@ export interface Question {
   elo: number;
   options?: Option[];
   readingText?: string;
+  rlModelLog?: RlModelLog;
 }
+
+export interface RlModelLog {
+  modelType: string;
+  modelName: string;
+  modelVersion: string;
+  eloUser: number;
+  eloQuestionPrev: number;
+  streak: number;
+  resultPrev: number;
+  offsetChosen: number;
+  eloQuestionNext: number;
+  timestamp: string; 
+}
+
+
