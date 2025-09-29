@@ -4,11 +4,33 @@
   </div>
 
   <nav class="main-header__nav" [class.open]="navOpen">
-    <button class="btn btn--primary" [routerLink]="'/eval'">Evaluation</button>
-    <button class="btn" [routerLink]="'/train'" [disabled]="!canTrain">Trainning</button>
-    <button class="btn">Progress</button>
-    <button class="btn btn--danger mobile-logout" (click)="logout()">Logout</button>
-  </nav>
+  <button
+      class="btn"
+      (click)="goToEval()"  
+      [ngClass]="{'btn--primary': isOnEvalRoute() }">
+      Evaluation
+    </button>
+
+  <button
+    class="btn"
+    [routerLink]="'/train'"
+    routerLinkActive="btn--primary"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [disabled]="!canTrain">
+    Training
+  </button>
+
+  <button
+    class="btn"
+    [routerLink]="'/progress'"
+    routerLinkActive="btn--primary"
+    [routerLinkActiveOptions]="{ exact: true }"
+    [disabled]="!canTrain">
+    Progress
+  </button>
+
+  <button class="btn btn--danger mobile-logout" (click)="logout()">Logout</button>
+</nav>
 
   <div class="main-header__right">
     <img class="main-header__avatar" src="assets/images/userProfilePicture.png" alt="Avatar" />
