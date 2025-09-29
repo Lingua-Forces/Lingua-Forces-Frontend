@@ -83,7 +83,8 @@ export class TrainComponent implements OnInit {
 
     this.trainService.submitAnswer({
       id: this.currentQuestion.id,
-      key: this.selectedKey
+      key: this.selectedKey,
+      rlModelLog: this.currentQuestion.rlModelLog 
     }).subscribe({
       next: (response) => {
         this.trainingResponse = response;
