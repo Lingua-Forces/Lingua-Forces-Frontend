@@ -12,13 +12,14 @@ import { TrainingResponse } from '../models/training-response';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { StatsResponse } from '../models/stats-response';
-
+import { LottieComponent } from 'ngx-lottie';
+import { AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-train',
   standalone: true,
   templateUrl: './train.component.html',
   styleUrl: './train.component.scss',
-  imports: [MainHeaderComponent, FormsModule, CommonModule, MatButtonModule, MatDialogModule],
+  imports: [MainHeaderComponent, FormsModule, CommonModule, MatButtonModule, MatDialogModule, LottieComponent],
 })
 export class TrainComponent implements OnInit {
 
@@ -32,8 +33,25 @@ export class TrainComponent implements OnInit {
   trainingResponse: TrainingResponse | null = null;
   @ViewChild('resultDialog') resultDialog!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
+  robotMessage = "¡Hola! Soy tu asistente IA. Responde las preguntas con calma 😊";
+  robotMessages: string[] = [
+    "¡Comencemos el entrenamiento! 🤖 Estoy ajustando tu ELO con cada respuesta 📊",
+    "Recuerda: cada pregunta tiene un nivel de dificultad 🎯 que la IA usará para calcular tu ELO.",
+    "¡Muy bien! Con esta práctica, tu ELO en inglés se actualizará automáticamente ⭐",
+    "No te preocupes por fallar 💡, la IA ajusta tu ELO para reflejar tu progreso real.",
+    "¡Excelente! Estoy usando IA para adaptar la dificultad de tus preguntas 💪",
+    "Cada respuesta me ayuda a afinar tu ELO y darte un entrenamiento a tu medida 🌍",
+    "¡Vamos! La IA está calibrando tu nivel según tu desempeño 😃",
+    "Tómate tu tiempo ⏳, cada respuesta que des redefine tu ELO con IA.",
+    "¡Muy bien! Tu rendimiento está entrenando al sistema y ajustando tu nivel 👏",
+    "Recuerda: la práctica constante con IA hará que tu ELO refleje tu verdadero nivel 😉"
+  ];
 
-
+  loadingAnimation: AnimationOptions = {
+    path: '/assets/lottie/bot.json', // tu archivo en assets
+    loop: true,
+    autoplay: true,
+  };
   constructor(private trainService: TrainService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -57,6 +75,8 @@ export class TrainComponent implements OnInit {
   nextQuestion(): void {
     this.fetchQuestion();
     this.hasSubmitted = false;
+    this.robotMessage = this.robotMessages[Math.floor(Math.random() * this.robotMessages.length)];
+    console.log('Siguiente pregunta cargada');
   }
   submitAnswer(): void {
     if (!this.selectedKey || !this.currentQuestion) return;
@@ -71,7 +91,7 @@ export class TrainComponent implements OnInit {
         this.userStreak = Math.max(0, response.currentStreak);
         this.openResultModal();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error("Error enviando respuesta", err)
     });
   }
 

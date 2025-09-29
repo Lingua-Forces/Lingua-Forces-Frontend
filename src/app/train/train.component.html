@@ -76,3 +76,13 @@
     </mat-dialog-actions>
   </div>
 </ng-template>
+<div class="assistant-container">
+      <!-- Robot animado -->
+      <ng-lottie [options]="loadingAnimation" width="200px" height="200px">
+      </ng-lottie>
+
+      <!-- Nube de texto -->
+      <div class="speech-bubble">
+        <p>{{ robotMessage }}</p>
+      </div>
+    </div>

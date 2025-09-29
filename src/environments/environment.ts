@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api/v1'
+  apiUrl: 'https://lingua-backend.calmmushroom-b3941497.westus2.azurecontainerapps.io/api/v1'
 };

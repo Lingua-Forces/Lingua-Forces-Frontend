@@ -131,3 +131,21 @@
   font-size: 16px;
   margin: 8px 0;
 }
+.assistant-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 1rem; // espacio entre robot y burbuja
+}
+
+.speech-bubble {
+  position: relative;
+  background: #f1f1f1;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  max-width: 300px;
+  font-size: 1rem;
+  color: #333;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}

@@ -13,6 +13,42 @@ import { StatsResponse } from '../models/stats-response';
 export class TrainService {
   private readonly baseUrl = `${environment.apiUrl}/training`;
   constructor(private http: HttpClient) { }
+  /*
+  
+  export interface Question {
+    id: string;
+    prompt: string;
+    type: string;
+    skill: string;
+    level: string;
+    elo: number;
+    options?: Option[];
+    readingText?: string;
+  }
+  */
+  exampleQuestion: Question = {
+    id: '1',
+    prompt: 'What is the capital of France?',
+    type: 'multiple-choice',
+    skill: 'geography',
+    level: 'beginner',
+    elo: 100,
+    options: [
+      { key: 'A', text: 'Berlin' },
+      { key: 'B', text: 'Madrid' },
+    ],
+    readingText: 'This is a sample reading text related to the question.' 
+  }
+
+  getQuestionExample(): Observable<Question>{
+    return new Observable<Question>((observer) => {
+      setTimeout(() => {
+        observer.next(this.exampleQuestion);
+        observer.complete();
+      }
+      , 1000); // Simula un retraso de 1 segundo
+    });
+  }
   getQuestion(){
     return this.http.get<Question>(`${this.baseUrl}/getQuestion`);
   }
