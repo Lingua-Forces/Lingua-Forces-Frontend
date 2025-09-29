@@ -67,7 +67,8 @@
     <mat-dialog-content>
       <p>Your answer: <strong>{{ selectedOption }}</strong></p>
       <p *ngIf="selectedKey !== trainingResponse?.correctAnswer">
-        The correct answer is: <strong>{{ trainingResponse?.correctAnswer }}</strong>
+        <!-- The correct answer is: <strong>{{ trainingResponse?.correctAnswer }}</strong> -->
+        Feedback: <strong>{{ trainingResponse?.feedback }}</strong>
       </p>
     </mat-dialog-content>
 

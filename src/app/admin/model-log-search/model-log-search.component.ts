@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ModelLogSearchComponent {
   @Input() userIds: string[] = [];
+  @Input() usernames: string[] = [];
   @Output() search = new EventEmitter<any>();
 
   form: FormGroup;

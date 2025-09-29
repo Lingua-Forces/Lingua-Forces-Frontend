@@ -1,0 +1,47 @@
+<div class="que-table-col">
+  <h3>Response history</h3>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="answeredAt">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let row"> {{ row.answeredAt | date:'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="prompt">
+      <th mat-header-cell *matHeaderCellDef> Question Prompt </th>
+      <td mat-cell *matCellDef="let row"> {{ row.prompt }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="questionType">
+      <th mat-header-cell *matHeaderCellDef> Question Type </th>
+      <td mat-cell *matCellDef="let row"> {{ row.questionType }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="skill">
+      <th mat-header-cell *matHeaderCellDef> Question Skill </th>
+      <td mat-cell *matCellDef="let row"> {{ row.skill }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="questionElo">
+      <th mat-header-cell *matHeaderCellDef> Question Elo </th>
+      <td mat-cell *matCellDef="let row"> {{ row.questionElo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="userAnswer">
+      <th mat-header-cell *matHeaderCellDef> User Answer </th>
+      <td mat-cell *matCellDef="let row"> {{ row.userAnswer }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="correct">
+      <th mat-header-cell *matHeaderCellDef> Is Correct </th>
+      <td mat-cell *matCellDef="let row"> {{ row.correct }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+   <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page">
+  </mat-paginator>
+</div>

@@ -11,6 +11,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 export class LineChartComponent {
   @Input() data: { name: string; series: { name: string; value: number }[] }[] = [];
   @Input() title: string = '';
-  @Input() xAxisLabel: string = 'Día';
-  @Input() yAxisLabel: string = 'Ejecuciones';
+  @Input() xAxisLabel: string = 'X';
+  @Input() yAxisLabel: string = 'Y';
 }

@@ -1,0 +1,60 @@
+.simulation-container {
+  margin: 48px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(24,40,73,0.05);
+  padding: 36px 40px 30px 40px;
+  max-width: 440px;
+  min-width: 320px;
+}
+
+.sim-form-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 18px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.sim-form-row mat-form-field.sim-full-width {
+  flex: 1 1 100%;
+  width: 100%;
+}
+
+.sim-form-row mat-checkbox {
+  margin-left: 4px;
+  font-size: 1.08rem;
+}
+
+.sim-form-row:last-child {
+  justify-content: flex-end;
+}
+
+button[type="submit"] {
+  min-width: 110px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+
+.sim-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #246ad4;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: .01em;
+}
+
+.sim-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  min-height: 54px;
+  color: #246ad4;
+  font-weight: 500;
+  font-size: 1.08rem;
+}
+
+

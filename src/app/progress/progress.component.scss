@@ -1,0 +1,255 @@
+.dashboard-row {
+  display: flex;
+  align-items: stretch;
+  margin-top: 32px;
+  width: 100%;
+  gap : 32px;
+}
+
+.dashboard-row {
+  align-items: stretch;
+  
+}
+
+.chart-col, .empty-col {
+  flex: 1 1 33%;     
+  min-width: 0;     
+  display: flex;
+  align-items: stretch;
+}
+.chart-col{
+  margin-left: 48px; 
+  margin-right: 48px;
+}
+
+
+.dashboard-row > app-questions-table {
+  flex: 1 1 0;  
+  min-width: 0; 
+  margin-right: 48px;
+  margin-left: 48px;
+  margin-bottom: 48px;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-x: auto; /* Permite el desplazamiento horizontal si es necesario */
+}
+
+.dashboard-top-row {
+  display: flex;
+  gap: 40px;
+  margin-left: 48px;
+  margin-right: 48px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  align-items: flex-start;
+}
+
+.kpi-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+
+.kpi-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border-radius: 14px;
+  padding: 16px 24px;
+  gap: 18px;
+  min-width: 0;
+}
+
+.kpi-icon {
+  font-size: 2.5rem;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  line-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.kpi-level .kpi-icon { color: #1e88e5; }
+.kpi-elo .kpi-icon { color: #e67c30; }
+.kpi-streak .kpi-icon { color: #e53935; }
+
+.kpi-label {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: #445;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #22305a;
+  margin-top: 2px;
+}
+
+.badges-block {
+  flex: 1 1 0;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  border-radius: 18px;
+  padding: 30px 40px 24px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.badges-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.badges-title {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #22305a;
+}
+
+.badges-show-all-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  margin-left: 16px;
+  font-size: 1.7rem;
+  transition: background 0.1s;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.badges-show-all-btn:hover {
+  background: #e3f2fd;
+}
+
+.badges-list {
+  display: flex;
+  gap: 30px;
+  margin: 18px 0 10px 0;
+}
+
+.badge-img {
+  width: 70px;
+  height: 70px;
+  border: 3px solid transparent;
+  background: #f4f7fa;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+  transition: border 0.2s, transform 0.2s;
+  margin-right: 30px;
+  cursor: pointer;
+}
+.badge-img.selected {
+  border: 3px solid #1565c0;
+  transform: scale(1.07);
+}
+
+.badges-caption {
+  color: #7584a3;
+  font-size: 0.98rem;
+  margin-top: 6px;
+}
+
+
+/* Aplica SOLO a la carta del pie chart */
+.adv-pie-card {
+  padding: 12px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  height: 100%;
+  width: 20vw;
+  box-sizing: border-box;
+}
+.no-data-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  /* Borde punteado y fondo suave */
+  padding: 1rem;
+  border: 2px dashed rgba(0, 0, 0, 0.1);
+  background-color: #f5faff;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.placeholder-icon {
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.placeholder-text {
+  /* Texto en cursiva y color secundario */
+  font-style: italic;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
+}
+
+.placeholder-cta {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.25rem;
+  background-color: #1976d2; /* primary Material Blue 700 */
+  color: #fff;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #115293; /* primary Material Blue 900 */
+  }
+}
+
+
+.badge-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+}
+
+.badge-modal-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+  padding: 18px 28px;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contenido de la tarjeta */
+  max-width: 250px;    /* Limita el ancho máximo de la tarjeta */
+  width: 100%;
+}
+
+.badge-img-large {
+  max-width: 90px;
+  max-height: 90px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 10px;
+  display: block;
+}
+

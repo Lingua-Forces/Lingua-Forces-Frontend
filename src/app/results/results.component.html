@@ -1,6 +1,6 @@
 <app-main-header />
 
-<section class="results-content" *ngIf="result; else loading">
+<section class="results-content" *ngIf="result">
   <div class="results__container">
     <h1 class="results__title">Resultados de tu Evaluación</h1>
     <p class="results__date">Evaluado el: {{ result.evaluatedAt | date: 'long' }}</p>
@@ -25,6 +25,11 @@
   </div>
 </section>
 
-<ng-template #loading>
-  <p class="loading">Cargando resultados...</p>
-</ng-template>
+<div class="loader" *ngIf="!result">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+      diameter="42">
+    </mat-progress-spinner>
+    <span>Evaluando preguntas...</span>
+</div>

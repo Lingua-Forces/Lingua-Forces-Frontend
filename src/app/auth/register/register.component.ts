@@ -64,7 +64,12 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login']); // Redirigir al login
       },
       error: (err) => {
-        this.utils.showSnackBar('Hubo un problema al crear la cuenta');
+        if (err.status === 409) {
+          this.utils.showSnackBar('El correo electrónico ya está registrado');
+        }
+        else{
+          this.utils.showSnackBar('Hubo un problema al crear la cuenta');
+        }
         console.error(err);
       },
     });

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { MainHeaderComponent } from '../shared/main-header/main-header.component';
 import { TrainService } from './train.service';
-import { Question } from '../models/question';
+import { Question, RlModelLog } from '../models/question';
 import { UserAnswer } from '../models/user-answer';
 import { Option } from '../models/option';
 import { TrainingResponse } from '../models/training-response';
@@ -91,6 +91,7 @@ export class TrainComponent implements OnInit {
         this.userElo = response.currentElo;
         this.userStreak = Math.max(0, response.currentStreak);
         this.openResultModal();
+
       },
       error: (err) => console.error("Error enviando respuesta", err)
     });
@@ -105,6 +106,8 @@ export class TrainComponent implements OnInit {
   closeResultModal(): void {
     if (this.dialogRef) {
       this.dialogRef.close();
+      this.selectedKey = '';
+      this.selectedOption = '';
     }
   }
 

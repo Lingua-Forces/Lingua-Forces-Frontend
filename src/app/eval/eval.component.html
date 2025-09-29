@@ -1,12 +1,18 @@
 <app-main-header />
 
-<section class="evaluation-content" *ngIf="currentQuestion; else loading">
+<section class="evaluation-content" *ngIf="currentQuestion">
   <div class="evaluation__container">
-    <h1 class="evaluation__title">Evaluación de Inglés</h1>
-    <p class="evaluation__subtitle">Responde las siguientes preguntas para conocer tu nivel.</p>
+    <h1 class="evaluation__title">
+      {{ isReevaluation ? 'Reevaluación de nivel' : 'Test de nivel de inglés' }}
+    </h1>
+    <p class="evaluation__subtitle">
+      {{ isReevaluation
+          ? 'Responde las siguientes preguntas para actualizar tu nivel actual.'
+          : 'Responde las siguientes preguntas para determinar tu nivel inicial.' }}
+    </p>
 
     <div class="evaluation__progress">
-      <label for="progress">Pregunta {{ currentIndex + 1 }} de {{ questions.length }}</label>
+      <label for="progress">Question {{ currentIndex + 1 }} de {{ questions.length }}</label>
       <progress id="progress" [value]="currentIndex + 1" [max]="questions.length"></progress>
     </div>
 
@@ -41,6 +47,11 @@
   </div>
 </section>
 
-<ng-template #loading>
-  <p class="loading">Cargando preguntas...</p>
-</ng-template>
+<div class="loader" *ngIf="!currentQuestion">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+      diameter="42">
+    </mat-progress-spinner>
+    <span>Evaluando preguntas...</span>
+</div>

@@ -20,7 +20,9 @@
       <mat-form-field appearance="outline" class="search-field">
         <mat-select formControlName="userId" placeholder="Selecciona un usuario">
           <mat-option value="all">Todos</mat-option>
-          <mat-option *ngFor="let id of userIds" [value]="id">{{ id }}</mat-option>
+          <mat-option *ngFor="let i of userIds?.length ? [].constructor(userIds.length) : []; let idx = index" [value]="userIds[idx]">
+              {{ userIds[idx] }} - {{ usernames[idx] }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>

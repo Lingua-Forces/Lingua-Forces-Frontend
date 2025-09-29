@@ -1,0 +1,71 @@
+<app-admin-header />
+<div class="simulation-container mat-elevation-z4">
+  <h2 class="sim-title">Iniciar Simulación de Aprendizaje</h2>
+
+  <div class="sim-loader" *ngIf="loading">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+      diameter="42">
+    </mat-progress-spinner>
+    <span>Ejecutando simulación...</span>
+  </div>
+
+  <form [formGroup]="simForm" (ngSubmit)="onSimulate()" autocomplete="off" *ngIf="!loading">
+
+    <!-- Usuario -->
+    <div class="sim-form-row">
+      <mat-form-field appearance="outline" class="sim-full-width">
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="userId" required>
+          <mat-option *ngFor="let i of userIds?.length ? [].constructor(userIds.length) : []; let idx = index" [value]="userIds[idx]">
+            {{ userIds[idx] }} - {{ usernames[idx] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Rango de fechas -->
+    <div class="sim-form-row">
+      <mat-form-field appearance="outline" class="sim-full-width">
+        <mat-label>Rango de fechas</mat-label>
+        <mat-date-range-input [rangePicker]="rangePicker" formGroupName="dateRange">
+          <input matStartDate formControlName="start" placeholder="Desde" required>
+          <input matEndDate formControlName="end" placeholder="Hasta" required>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+
+    <!-- Ejercicios por día -->
+    <div class="sim-form-row">
+      <mat-form-field appearance="outline" class="sim-full-width">
+        <mat-label> Minimo de ejercicios por día</mat-label>
+        <input matInput type="number" min="1" formControlName="minExercisesPerDay">
+      </mat-form-field>
+    </div>
+
+    <!-- Maximo de ejercicios por día -->
+    <div class="sim-form-row">
+      <mat-form-field appearance="outline" class="sim-full-width">
+        <mat-label> Maximo de ejercicios por día</mat-label>
+        <input matInput type="number" min="1" formControlName="maxExercisesPerDay">
+      </mat-form-field>
+    </div>
+
+    <!-- Incluir reevaluación -->
+    <div class="sim-form-row">
+      <mat-checkbox formControlName="includeReevaluation">
+        Incluir reevaluación
+      </mat-checkbox>
+    </div>
+
+    <!-- Botón -->
+    <div class="sim-form-row">
+      <button mat-raised-button color="primary" type="submit" [disabled]="simForm.invalid">
+        Simular
+      </button>
+    </div>
+  </form>
+</div>

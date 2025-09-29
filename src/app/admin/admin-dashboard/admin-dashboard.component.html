@@ -1,6 +1,7 @@
 <app-admin-header />
 <app-model-log-search
   [userIds]="userIds"
+  [usernames]="usernames"
   (search)="onSearch($event)">
 </app-model-log-search>
 
@@ -20,58 +21,87 @@
       </app-kpi-card>
     </div>
     <div class="line-chart-col">
-      <app-line-chart
-        [data]="dashboard.executionsOverTime"
-        title="Ejecuciones por día"
-        xAxisLabel="Fecha"
-        yAxisLabel="Cantidad">
-      </app-line-chart>
+      <div class="dashboard-card">
+        <app-line-chart *ngIf="dashboard.executionsOverTime[0].series.length > 0; else noData"
+          [data]="dashboard.executionsOverTime"
+          title="Ejecuciones por día"
+          xAxisLabel="Fecha"
+          yAxisLabel="Cantidad">
+        </app-line-chart>
+      </div>
     </div>
   </div>
 
   <div class="dashboard-row" *ngIf = "selectedModelType === 'nlp'">
-  <div class="bar-chart-col">
-    <app-grouped-bar-chart
-      title="Frecuencia de criterios"
-      [data]="dashboard.scoreDistributionByCriterion || []"
-      xAxisLabel="Criterio"
-      yAxisLabel="Frecuencia">
-    </app-grouped-bar-chart>
+  <div class="bar-chart-col" style="margin-right: 0;" >
+    <div class="dashboard-card">
+      <app-grouped-bar-chart *ngIf="hasScoreDistribution; else noData"
+        title="Frecuencia de criterios"
+        [data]="dashboard.scoreDistributionByCriterion || []"
+        xAxisLabel="Criterio"
+        yAxisLabel="Frecuencia">
+      </app-grouped-bar-chart>
+    </div>
+
   </div>
-  <div class="bar-chart-col">
-    <app-grouped-bar-chart
+
+  <div class="bar-chart-col" style="margin-left: 0;" >
+  <div class="dashboard-card">
+    <app-grouped-bar-chart *ngIf="hasScoreDistribution; else noData"
       title="Promedio por criterio"
       [data]="dashboard.avgScoreByCriterion || []"
       xAxisLabel="Criterio"
       yAxisLabel="Promedio">
-    </app-grouped-bar-chart>
+    </app-grouped-bar-chart>    
+  </div>
+
   </div>
   </div>
 
   <div class="dashboard-row" *ngIf = "selectedModelType === 'rl'">
-    <div class="bar-chart-col">
-      <app-line-chart
+    <div class="bar-chart-col" style="margin-right: 0;" >
+      <div class="dashboard-card">
+      <app-line-chart *ngIf="hasEloProgress; else noData"
           [data]="dashboard.eloProgressOverTime || []"
           title="Evolución de ELO del usuario y ELO de la pregunta"
           xAxisLabel="Fecha"
           yAxisLabel="ELO">
       </app-line-chart>
+      </div>
     </div>
-    <div class="bar-chart-col">
-      <app-line-chart
-          [data]="dashboard.successRateByEloDiff || []"
-          title="Tasa de acierto según diferencia de ELO (usuario - pregunta)"
-          xAxisLabel="Diferencial de ELO (ELO usuario – ELO pregunta)"
-          yAxisLabel="Porcentaje de aciertos (%)">
-      </app-line-chart>
+    <div class="bar-chart-col" style="margin-left: 0;" >
+      <div class="dashboard-card">
+        <app-line-chart *ngIf="hasEloProgress; else noData"
+            [data]="dashboard.successRateByEloDiff || []"
+            title="Tasa de acierto según diferencia de ELO (usuario - pregunta)"
+            xAxisLabel="Diferencial de ELO (ELO usuario – ELO pregunta)"
+            yAxisLabel="Porcentaje de aciertos (%)">
+        </app-line-chart>
+      </div>
     </div>
   </div>
 
   <div class="dashboard-row">
-    <app-logs-table
+    <app-logs-table 
       [logs]="dashboard.lastExecutions"
       [displayedColumns]="displayedColumns"
       [selectedModelType]="selectedModelType">
     </app-logs-table>
   </div>
+
 </ng-container>
+
+<ng-template #noData>
+  <div class="no-data-placeholder">
+    <mat-icon class="placeholder-icon" 
+              aria-hidden="true" 
+              fontIcon="insert_chart_outlined">
+    </mat-icon>
+
+    <p class="placeholder-text">
+      Nothing to display.<br>
+      Please select other filters and click "Search" to see the KPIs and charts.
+    </p>
+
+  </div>
+</ng-template>
