@@ -79,7 +79,7 @@ export class TrainComponent implements OnInit {
     console.log('Siguiente pregunta cargada');
   }
   submitAnswer(): void {
-    if (!this.selectedKey || !this.currentQuestion) return;
+    if (!this.selectedKey || !this.currentQuestion || !this.currentQuestion.rlModelLog) return;
 
     this.trainService.submitAnswer({
       id: this.currentQuestion.id,
