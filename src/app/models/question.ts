@@ -10,7 +10,6 @@ export interface Question {
   options?: Option[];
   readingText?: string;
   rlModelLog?: RlModelLog;
-  
 }
 
 export interface RlModelLog {
@@ -25,4 +24,5 @@ export interface RlModelLog {
   eloQuestionNext: number;
   timestamp: string; 
 }
+
 
