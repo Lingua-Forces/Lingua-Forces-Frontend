@@ -8,31 +8,10 @@
   width: 100%;
   min-height: 100vh;
 
-  &__header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 2rem;
-    align-items: center;
-  }
-
-  &__brand {
-    font-size: $semibold-header-1-font-size;
-    font-family: 'Arial', sans-serif;
-    font-weight: 600;
-    color: $color-primary;
-    cursor: pointer;
-  }
-
-  &__actions {
-    display: flex;
-    gap: 1rem;
-  }
-
   &__main {
     flex: 1;
     width: 100%;
-    padding: 2rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: row;
     gap: 2rem;
@@ -44,8 +23,7 @@
   }
 
   &__hero {
-    flex: 1 1 60%;
-    margin-bottom: 4rem;
+    // flex: 1 1 60%;
     max-width: 40%;
     & .landing__title {
       font-size: $extra-bold-header1-font-size;
@@ -68,7 +46,10 @@
     }
     @media (max-width: 768px) {
       width: 100%;
+      max-width: 100%;
       text-align: center;
+    margin-bottom: 4rem;
+
     }
   }
 
@@ -76,6 +57,7 @@
     flex: 0 0 40%;
     padding: 0;
     margin-left: auto;
+    
     align-self: flex-start; // hace que el card solo tome la altura que su contenido necesita
 
     .features__header {
@@ -132,6 +114,8 @@
     }
     @media (max-width: 768px) {
       width: 100%;
+      // center 
+      margin: 0 auto;
     }
   }
 
