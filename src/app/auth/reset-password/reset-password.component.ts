@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al actualizar la contraseña:', error);
-        this.utils.showSnackBar('Error al actualizar la contraseña');
+        this.utils.showSnackBar('Error al actualizar la contraseña, enlace inavlido o expirado');
       }
     });
     console.log('Tu nueva password bro:', data); // eliminar esta línea en producción
